@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Advance Business App - ড্যাশবোর্ড</title>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Ion Icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        /* General Body Styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f8fa;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        /* লগইন চেক মেসেজ */
+        .login-check-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .login-check-message {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            color: #333;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .login-check-message h2 {
+            color: #ff8c00;
+            margin-bottom: 15px;
+        }
+        
+        .login-check-message button {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        
+        /* Main App Container */
+        .app-container {
+            max-width: 480px;
+            margin: auto;
+            background-color: #f7f8fa;
+            min-height: 100vh;
+            padding-top: 70px;
+            padding-bottom: 70px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        /* Header Section */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            max-width: 350px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #ff8c00;
+            z-index: 100;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        header .icon {
+            font-size: 22px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        /* App Name Styling */
+        .app-name {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD700 0%, #FFB700 25%, #66c2ff 50%, #4CD964 75%, #FFD700 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite, fadeIn 1.5s ease-out;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3),
+                         0 0 20px rgba(255, 215, 0, 0.2),
+                         0 0 30px rgba(255, 215, 0, 0.1);
+            position: relative;
+            padding: 0 5px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Greeting Section */
+        .greeting {
+            padding: 10px 20px;
+        }
+        .greeting h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+            color: #2c3e50;
+        }
+        .greeting p {
+            font-size: 14px;
+            margin: 4px 0 0;
+            color: #7f8c8d;
+        }
+
+        /* Card Style */
+        .card {
+            background-color: #ffffff;
+            margin: 15px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        /* Slider Area */
+        .slider-container {
+            position: relative;
+            width: 100%;
+        }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .slide img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Quick Info Bar */
+        .quick-info {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 10px;
+        }
+        .info-item {
+            text-align: center;
+            cursor: pointer;
+        }
+        .info-item .icon-wrapper {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 8px;
+            transition: transform 0.2s ease;
+        }
+        .info-item:hover .icon-wrapper {
+            transform: scale(1.1);
+        }
+        .info-item .icon-wrapper.facebook { background: linear-gradient(45deg, #1877F2, #3b5998); }
+        .info-item .icon-wrapper.whatsapp { background: linear-gradient(45deg, #25D366, #128C7E); }
+        .info-item .icon-wrapper.telegram { background: linear-gradient(45deg, #0088cc, #2AABEE); }
+        .info-item .icon-wrapper.youtube { background: linear-gradient(45deg, #FF0000, #c4302b); }
+        .info-item i {
+            font-size: 24px;
+            color: white;
+        }
+        .info-item span {
+            font-size: 12px;
+            color: #333;
+            font-weight: 500;
+        }
+       
+        /* Income Projects Section */
+        .section-title {
+            padding: 15px 20px 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 10px 20px 25px;
+        }
+        .project-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .project-item:hover {
+            transform: scale(1.08);
+        }
+        .project-item .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #ff8c00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 8px;
+            color: #fff;
+            font-size: 28px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-item:hover .icon-wrapper {
+            transform: scale(1.1);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        }
+            
+        .project-item .gradient-orange { background: linear-gradient(145deg, #ffb88c, #ff8c00); }
+        .project-item .gradient-blue { background: linear-gradient(145deg, #89f7fe, #66a6ff); }
+        .project-item .gradient-pink { background: linear-gradient(145deg, #fbc2eb, #a6c1ee); }
+        .project-item .gradient-green { background: linear-gradient(145deg, #81FBB8, #28C76F); }
+        .project-item .gradient-purple { background: linear-gradient(145deg, #c797d8, #8c78de); }
+        .project-item .gradient-red { background: linear-gradient(145deg, #ff9a9e, #f96262); }
+        .project-item .gradient-dark-blue { background: linear-gradient(145deg, #536976, #292E49); }
+        .project-item .gradient-gold { background: linear-gradient(145deg, #FFD194, #D1913C); }
+        .project-item span {
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;         
+        }
+
+        /* Bottom Navigation Bar */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            background-color: #ffffff;
+            border-top: 1px solid #f0f0f0;
+            z-index: 1000;
+            padding: 5px 0;
+        }
+        .nav-item {
+            text-align: center;
+            cursor: pointer;
+            color: #7f8c8d;
+            flex: 1;
+            padding: 10px 0;
+            transition: all 0.2s ease;
+        }
+        .nav-item.active {
+            color: #ff8c00;
+            transform: translateY(-3px);
+        }
+        .nav-item .icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        .nav-item .label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Side Menu Styles */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: white;
+            z-index: 2000;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .side-menu.open {
+            left: 0;
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .menu-header {
+            background: #ff8c00;
+            padding: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .close-menu {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #e6e6e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #ff8c00;
+            font-size: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .profile-details h3 {
+            margin: 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .verified-badge {
+            color: #4CD964;
+            margin-left: 5px;
+        }
+        
+        .profile-details p {
+            margin: 5px 0 0;
+            font-size: 14px;
+        }
+        
+        .profile-complete-btn {
+            display: block;
+            background: #8c78de;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .menu-items {
+            padding: 10px 0;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+        
+        .menu-item:hover {
+            background: #f7f8fa;
+        }
+        
+        .menu-item i {
+            width: 30px;
+            font-size: 18px;
+            margin-right: 15px;
+        }
+        
+        .menu-item.home i { color: #ff0000; }
+        .menu-item.profile i { color: #ff8c00; }
+        .menu-item.points i { color: #4CD964; }
+        .menu-item.voucher i { color: #66a6ff; }
+        .menu-item.subscription i { color: #c4302b; }
+        .menu-item.about i { color: #8c78de; }
+        .menu-item.privacy i { color: #536976; }
+        .menu-item.contact i { color: #25D366; }
+        .menu-item.settings i { color: #0088cc; }
+        .menu-item.logout i { color: #f96262; }
+        
+        .menu-item span {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* App content shift when menu is open */
+        .app-container.shifted {
+            transform: translateX(10px);
+        }
+        
+        /* Animated Navigation Menu Styles */
+        .animated-navigation {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, 100px);
+        }
+        
+        .animated-navigation.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+        
+        .animated-navigation ul {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px;
+            margin: 0;
+            list-style: none;
+        }
+        
+        .animated-navigation ul li {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            flex: 0 0 20%;
+        }
+        
+        .animated-navigation ul li a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .animated-navigation ul li .icon {
+            position: relative;
+            display: block;
+            line-height: 75px;
+            font-size: 1.5em;
+            text-align: center;
+            transition: 0.5s;
+            color: #7f8c8d;
+        }
+        
+        .animated-navigation ul li.active .icon {
+            transform: translateY(-8px);
+            color: #ff8c00;
+        }
+        
+        .animated-navigation ul li .text {
+            position: absolute;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.75em;
+            letter-spacing: 0.05em;
+            transition: 0.5s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .animated-navigation ul li.active .text {
+            opacity: 1;
+            transform: translateY(10px);
+        }
+        
+        .indicator {
+            position: absolute;
+            top: -50%;
+            width: 70px;
+            height: 70px;
+            background: #ff8c00;
+            border-radius: 50%;
+            border: 6px solid #f7f8fa;
+            transition: 0.5s;
+            z-index: 0;
+        }
+        
+        .indicator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -22px;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            border-top-right-radius: 20px;
+            box-shadow: 1px -10px 0 0 #f7f8fa;
+        }
+        
+        .indicator::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -22px;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            border-top-left-radius: 20px;
+            box-shadow: -1px -10px 0 0 #f7f8fa;
+        }
+        
+        .animated-navigation ul li:nth-child(1).active ~ .indicator {
+            transform: translateX(calc(70px * 0));
+        }
+        
+        .animated-navigation ul li:nth-child(2).active ~ .indicator {
+            transform: translateX(calc(70px * 1));
+        }
+        
+        .animated-navigation ul li:nth-child(3).active ~ .indicator {
+            transform: translateX(calc(70px * 2));
+        }
+        
+        .animated-navigation ul li:nth-child(4).active ~ .indicator {
+            transform: translateX(calc(70px * 3));
+        }
+        
+        .animated-navigation ul li:nth-child(5).active ~ .indicator {
+            transform: translateX(calc(70px * 4));
+        }
+        
+        /* Toggle Button for Animated Navigation */
+        .nav-toggle {
+            position: fixed;
+            bottom: 10px;
+            right: 160px;
+            width: 50px;
+            height: 50px;
+            background: #ff8c00;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-toggle:hover {
+            transform: scale(1);
+        }
+        
+        /* Prevent zoom on double tap for iOS */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Disable text selection */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body class="no-select">
+    
+    <!-- লগইন চেক ওভারলে -->
+    <div class="login-check-overlay" id="loginCheckOverlay">
+        <div class="login-check-message">
+            <h2>লগইন প্রয়োজন!</h2>
+            <p>ড্যাশবোর্ড দেখতে আপনাকে প্রথমে লগইন করতে হবে।</p>
+            <button onclick="goToLogin()">লগইন পেজে যান</button>
+        </div>
+    </div>
+    
+    <!-- লগইন চেক স্ক্রিপ্ট -->
+    <script>
+        // লগইন চেক ফাংশন
+        function checkLoginStatus() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            const loginCheckOverlay = document.getElementById('loginCheckOverlay');
+            
+            if (!isLoggedIn || isLoggedIn !== 'true') {
+                // লগইন না করলে ওভারলে দেখান
+                if (loginCheckOverlay) {
+                    loginCheckOverlay.style.display = 'flex';
+                }
+                return false;
+            } else {
+                // লগইন করলে ওভারলে লুকান
+                if (loginCheckOverlay) {
+                    loginCheckOverlay.style.display = 'none';
+                }
+                
+                // লগইন করা ইউজারের নাম দেখানো
+                const userName = sessionStorage.getItem('name') || 'ব্যবহারকারী';
+                const userPhone = sessionStorage.getItem('phone') || '+880 1XXX-XXXXXX';
+                const userEmail = sessionStorage.getItem('email') || '';
+                
+                const userNameElements = document.querySelectorAll('.greeting h1');
+                if (userNameElements.length > 0) {
+                    userNameElements[0].textContent = `${userName}, স্বাগতম!`;
+                }
+                
+                // প্রোফাইল ফটো লোড করা
+                loadProfilePhoto();
+                
+                // সাইড মেনুতে ইউজার ইনফো আপডেট
+                const profileName = document.querySelector('.profile-details h3');
+                const profilePhone = document.querySelector('.profile-details p');
+                
+                if (profileName) {
+                    profileName.innerHTML = `${userName} <i class="fas fa-check-circle verified-badge"></i>`;
+                }
+                
+                if (profilePhone) {
+                    profilePhone.textContent = userPhone;
+                }
+                
+                return true;
+            }
+        }
+        
+        // লগইন পেজে যাওয়ার ফাংশন
+        function goToLogin() {
+            window.location.href = 'login.html';
+        }
+        
+        // লগআউট ফাংশন
+        function logoutUser() {
+            if (confirm('আপনি কি নিশ্চিতভাবে লগআউট করতে চান?')) {
+                sessionStorage.clear();
+                localStorage.removeItem('profilePhoto');
+                localStorage.removeItem('rememberedUser');
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // প্রোফাইল ফটো লোড করার ফাংশন
+        function loadProfilePhoto() {
+            const profileImgContainer = document.querySelector('.profile-img');
+            if (!profileImgContainer) return;
+            
+            // পুরানো কন্টেন্ট মুছুন
+            profileImgContainer.innerHTML = '';
+            
+            const photoUrl = localStorage.getItem('profilePhoto');
+            const defaultPhoto = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+            
+            // যদি প্রোফাইল ফটো থাকে
+            if (photoUrl && photoUrl !== 'null' && photoUrl !== 'undefined' && photoUrl !== defaultPhoto) {
+                const img = document.createElement('img');
+                img.src = photoUrl;
+                img.alt = 'Profile Photo';
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                img.style.borderRadius = '50%';
+                profileImgContainer.appendChild(img);
+            } else {
+                // ডিফল্ট আইকন
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-user';
+                icon.style.fontSize = '24px';
+                icon.style.color = '#ff8c00';
+                profileImgContainer.appendChild(icon);
+            }
+        }
+        
+        // পেজ লোড হওয়ার সময় লগইন চেক করুন
+        document.addEventListener('DOMContentLoaded', function() {
+            // প্রথমে লগইন চেক করুন
+            const isLoggedIn = checkLoginStatus();
+            
+            // শুধুমাত্র লগইন করলে বাকি ফাংশনালিটি লোড করুন
+            if (isLoggedIn) {
+                initializeDashboard();
+            }
+        });
+        
+        // ড্যাশবোর্ড ইনিশিয়ালাইজ ফাংশন
+        function initializeDashboard() {
+            // Universal Slider Function
+            function initializeSlider(sliderId) {
+                const slider = document.getElementById(sliderId);
+                if (!slider) return;
+
+                const sliderWrapper = slider.querySelector('.slider-wrapper');
+                const slides = slider.querySelectorAll('.slide');
+                if (slides.length <= 1) return;
+                let currentIndex = 0;
+
+                function showNextSlide() {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+                }
+                setInterval(showNextSlide, 3500);
+            }
+
+            // Menu Toggle Functionality
+            const menuToggle = document.getElementById('menu-toggle');
+            const closeMenu = document.getElementById('close-menu');
+            const sideMenu = document.getElementById('side-menu');
+            const menuOverlay = document.getElementById('menu-overlay');
+            const appContainer = document.getElementById('app-container');
+
+            function openMenu() {
+                sideMenu.classList.add('open');
+                menuOverlay.classList.add('open');
+                appContainer.classList.add('shifted');
+                // মেনু খুললে প্রোফাইল ফটো রিফ্রেশ করুন
+                loadProfilePhoto();
+            }
+
+            function closeSideMenu() {
+                sideMenu.classList.remove('open');
+                menuOverlay.classList.remove('open');
+                appContainer.classList.remove('shifted');
+            }
+
+            if (menuToggle) menuToggle.addEventListener('click', openMenu);
+            if (closeMenu) closeMenu.addEventListener('click', closeSideMenu);
+            if (menuOverlay) menuOverlay.addEventListener('click', closeSideMenu);
+
+            // Back button functionality for mobile
+            let historyStack = [];
+            
+            function pushState() {
+                historyStack.push('menu-open');
+                window.history.pushState({menu: 'open'}, '');
+            }
+            
+            function popState() {
+                if (historyStack.length > 0) {
+                    historyStack.pop();
+                    closeSideMenu();
+                }
+            }
+            
+            window.addEventListener('popstate', function(event) {
+                if (historyStack.length > 0) {
+                    popState();
+                    window.history.pushState({menu: 'open'}, '');
+                }
+            });
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    openMenu();
+                    pushState();
+                });
+            }
+            
+            if (closeMenu) {
+                closeMenu.addEventListener('click', function() {
+                    if (historyStack.length > 0) {
+                        window.history.back();
+                    } else {
+                        closeSideMenu();
+                    }
+                });
+            }
+            
+            if (menuOverlay) {
+                menuOverlay.addEventListener('click', function() {
+                    if (historyStack.length > 0) {
+                        window.history.back();
+                    } else {
+                        closeSideMenu();
+                    }
+                });
+            }
+
+            // Animated Navigation Menu Functionality
+            const animatedNav = document.getElementById('animated-nav');
+            const navToggle = document.getElementById('nav-toggle');
+            const listItems = document.querySelectorAll('.animated-navigation .list');
+            
+            function toggleNav() {
+                animatedNav.classList.toggle('active');
+                navToggle.classList.toggle('active');
+                
+                if (animatedNav.classList.contains('active')) {
+                    navToggle.innerHTML = '<i class="fas fa-times"></i>';
+                } else {
+                    navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            }
+            
+            function setActiveItem() {
+                listItems.forEach((item) => item.classList.remove('active'));
+                this.classList.add('active');
+            }
+            
+            if (navToggle) navToggle.addEventListener('click', toggleNav);
+            
+            listItems.forEach((item) => {
+                item.addEventListener('click', setActiveItem);
+            });
+
+            // Initialize sliders
+            initializeSlider('top-slider');
+            initializeSlider('bottom-slider');
+            
+            // Add glow effect to app name after page loads
+            setTimeout(() => {
+                const appName = document.querySelector('.app-name');
+                if (appName) {
+                    appName.style.animation = 'shine 3s linear infinite, glow 2s ease-in-out infinite';
+                }
+            }, 1500);
+            
+            // Initialize history state
+            window.history.replaceState({menu: 'closed'}, '');
+            
+            // Disable context menu (long press)
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+            
+            // লগআউট বাটনে ইভেন্ট লিসেনার যোগ করুন
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logoutUser();
+                });
+            }
+            
+            // প্রোফাইল মেনু লিঙ্ক সেট করা
+            const profileMenuItem = document.querySelector('.menu-item.profile');
+            if (profileMenuItem) {
+                profileMenuItem.href = 'profile.html';
+                profileMenuItem.addEventListener('click', function(e) {
+                    if (!checkLoginStatus()) {
+                        e.preventDefault();
+                        goToLogin();
+                    }
+                });
+            }
+            
+            // হোম মেনু লিঙ্ক
+            const homeMenuItem = document.querySelector('.menu-item.home');
+            if (homeMenuItem) {
+                homeMenuItem.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // শুধু মেনু বন্ধ করুন
+                    closeSideMenu();
+                });
+            }
+            
+            // সেটিংস মেনু লিঙ্ক
+            const settingsMenuItem = document.querySelector('.menu-item.settings');
+            if (settingsMenuItem) {
+                settingsMenuItem.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('সেটিংস পেজ শীঘ্রই আসছে!');
+                });
+            }
+            
+            // প্রোফাইল কমপ্লিট বাটন
+            const profileCompleteBtn = document.querySelector('.profile-complete-btn');
+            if (profileCompleteBtn) {
+                profileCompleteBtn.href = 'profile.html';
+            }
+        }
+    </script>
+
+    <div class="app-container" id="app-container">
+
+        <!-- Header -->
+        <header>
+            <div class="icon" id="menu-toggle"><i class="fas fa-bars"></i></div>
+            <div class="app-name">Advance Business</div>
+            <div class="icon"><i class="fas fa-bell"></i></div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Greeting -->
+            <div class="greeting">
+                <h1>স্বাগতম!</h1>
+                <p>আপনার সকল সেবা এখন এক জায়গায়।</p>
+            </div>
+
+            <!-- Top Slider in a Card -->
+            <div class="card">
+                <div class="slider-container" id="top-slider">
+                    <div class="slider-wrapper">
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=480&h=180&fit=crop&q=80" alt="Online Business"></div>
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?w=480&h=180&fit=crop&q=80" alt="Digital Services"></div>
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=480&h=180&fit=crop&q=80" alt="Colorful Banner"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Info Bar in a Card -->
+             <div class="card quick-info">
+                <div class="info-item">
+                    <div class="icon-wrapper facebook"><i class="fab fa-facebook-f"></i></div>
+                    <span>ফেসবুকে যুক্ত হন</span>
+                </div>
+                <div class="info-item">
+                    <div class="icon-wrapper youtube"><i class="fab fa-youtube"></i></div>
+                    <span>ভিডিও দেখুন</span>
+                </div>
+                <div class="info-item" onclick="window.open('https://chat.whatsapp.com/Bgppf1LHWgwEKrWg7QiZVS?mode=ems_copy_c', '_blank')">
+                    <div class="icon-wrapper whatsapp"><i class="fab fa-whatsapp"></i></div>
+                    <span>হোয়াটসঅ্যাপ গ্রুপ</span>
+                </div>
+                <div class="info-item" onclick="window.open('https://t.me/+W1qHEhMDdEY1N2Q1', '_blank')">
+                    <div class="icon-wrapper telegram"><i class="fab fa-telegram-plane"></i></div>
+                    <span>টেলিগ্রাম গ্রুপ</span>
+                </div>
+            </div>
+
+            <!-- Income Projects Section in a Card -->
+            <div class="card">
+                <div class="section-title">ইনকাম প্রজেক্ট</div>
+                <div class="projects-grid">
+                    <!-- Row 1 -->
+                    <div class="project-item">
+                        <div class="icon-wrapper gradient-orange"><i class="fas fa-mobile-alt"></i></div>
+                        <span>মোবাইল রিচার্জ</span>
+                    </div>
+                    <div class="project-item">
+                        <div class="icon-wrapper gradient-blue"><i class="fas fa-box-open"></i></div>
+                        <span>ড্রাই প্যাক</span>
+                    </div>
+                    <div class="project-item">
+                        <div class="icon-wrapper gradient-pink"><i class="fas fa-store"></i></div>
+                        <span>রিসেলিং</span>
+                    </div>
+                    <div class="project-item">
+                        <div class="icon-wrapper gradient-green"><i class="fas fa-ticket-alt"></i></div>
+                        <span>লটারি</span>
+                    </div>
+                    <!-- Row 2 -->
+                   <div class="project-item" onclick="window.location.href='reference.html'">
+                   <div class="icon-wrapper gradient-purple"><i class="fas fa-share-alt"></i></div>
+                        <span>রেফার</span>
+                     </div>
+                    <div class="project-item">
+                        <div class="icon-wrapper gradient-red"><i class="fas fa-tv"></i></div>
+                        <span>লাইভ টিভি</span>
+                    </div>
+                    <div class="project-item">
+                        <div class="icon-wrapper gradient-dark-blue"><i class="fas fa-graduation-cap"></i></div>
+                        <span>অনলাইন কোর্স</span>
+                    </div>
+                    <div class="project-item">
+                        <div class="icon-wrapper gradient-gold"><i class="fas fa-headset"></i></div>
+                        <span>হেল্প লাইন</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Slider in a Card -->
+            <div class="card">
+                <div class="slider-container" id="bottom-slider">
+                     <div class="slider-wrapper">
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=480&h=180&fit=crop&q=80" alt="Promotion 1"></div>
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=480&h=180&fit=crop&q=80" alt="Analytics Promotion"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+       <!-- Menu Overlay -->
+        <div class="menu-overlay" id="menu-overlay"></div>
+        
+        <!-- Animated Navigation Menu -->
+        <div class="animated-navigation" id="animated-nav">
+            <ul>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="ticket-outline"></ion-icon>
+                        </span>
+                        <span class="text">লটারি</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="school-outline"></ion-icon>
+                        </span>
+                        <span class="text">কোর্স</span>
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="text">হোম</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="cash-outline"></ion-icon>
+                        </span>
+                        <span class="text">আয় করুন</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                        </span>
+                        <span class="text">লাইভ চ্যাট</span>
+                    </a>
+                </li>
+                <div class="indicator"></div>
+            </ul>
+        </div>
+        
+        <!-- Toggle Button for Animated Navigation -->
+        <div class="nav-toggle" id="nav-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+        
+        <!-- Side Menu -->
+        <div class="side-menu" id="side-menu">
+            <div class="menu-header">
+                <div class="profile-info">
+                    <div class="profile-img">
+                        <!-- প্রোফাইল ফটো এখানে লোড হবে -->
+                    </div>
+                    <div class="profile-details">
+                        <h3>আপনার নাম <i class="fas fa-check-circle verified-badge"></i></h3>
+                        <p>+880 1XXX-XXXXXX</p>
+                        <a href="profile.html" class="profile-complete-btn">Profile Complete 100%</a>
+                    </div>
+                </div>
+                <div class="close-menu" id="close-menu">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            
+            <div class="menu-items">
+                <a href="#" class="menu-item home">
+                    <i class="fas fa-home"></i>
+                    <span>হোম</span>
+                </a>
+                <a href="profile.html" class="menu-item profile">
+                    <i class="fas fa-user"></i>
+                    <span>আমার প্রোফাইল</span>
+                </a>
+                <a href="my-referrals.html" class="menu-item referrals">
+                    <i class="fas fa-users"></i>
+                    <span>মাই রেফারেন্স</span>
+                </a>
+                <a href="#" class="menu-item points">
+                    <i class="fas fa-file"></i>
+                    <span>উপার্জিত পয়েন্টস</span>
+                </a>
+                <a href="#" class="menu-item voucher">
+                    <i class="fas fa-file"></i>
+                    <span>ভাউচার পয়েন্টস</span>
+                </a>
+                <a href="#" class="menu-item subscription">
+                    <i class="fas fa-file"></i>
+                    <span>সাবস্ক্রিপশন পয়েন্ট </span>
+                </a>
+                <a href="subject.html" class="menu-item about">
+                    <i class="fas fa-info-circle"></i>
+                    <span>আমাদের সম্পর্কে</span>
+                </a>
+                <a href="privacy.html" class="menu-item privacy">
+                    <i class="fas fa-lock"></i>
+                    <span>গোপনীয়তা নীতি</span>
+                </a>
+                <a href="contact.html" class="menu-item contact">
+                    <i class="fas fa-phone"></i>
+                    <span>যোগাযোগ</span>
+                </a>
+                <a href="#" class="menu-item settings">
+                    <i class="fas fa-cog"></i>
+                    <span>সেটিংস</span>
+                </a>
+                <a href="#" class="menu-item logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>লগ আউট</span>
+                </a>
+            </div>
+        </div>
+        
+</body>
+</html>
