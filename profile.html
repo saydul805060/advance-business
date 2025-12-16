@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>প্রোফাইল - Advance Business App</title>
+  <style>
+    /* লগইন চেক স্ক্রিপ্ট সরিয়ে দিয়েছি - পরে যোগ হবে */
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(200deg, #89f7fe, #66a6ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 15px;
+    }
+
+    .profile-card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      width: 550px;
+      max-width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .profile-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 5px solid #ff8c00;
+      object-fit: cover;
+      animation: rotateImg 5s linear infinite;
+    }
+
+    @keyframes rotateImg {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .info {
+      flex: 1;
+      min-width: 250px;
+    }
+    
+    .info h2 { 
+      margin: 0; 
+      font-size: 22px; 
+      color: #333; 
+      margin-bottom: 15px;
+    }
+    
+    .info p { 
+      margin: 8px 0; 
+      font-size: 16px; 
+      color: #555; 
+      padding: 5px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .info p:last-child {
+      border-bottom: none;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 2px;
+      margin-top: 15px;
+      background: #ff8c00;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .btn:hover { 
+      background: #ff7b00; 
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3);
+    }
+    
+    .back-btn {
+      display: inline-block;
+      padding: 10px 2px;
+      margin-top: 15px;
+      margin-right: 10px;
+      background: #666;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .back-btn:hover {
+      background: #555;
+      transform: translateY(-2px);
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .header {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #ff8c00;
+    }
+    
+    .header h1 {
+      margin: 0;
+      color: #333;
+      font-size: 24px;
+    }
+    
+    .header p {
+      margin: 5px 0 0;
+      color: #666;
+      font-size: 14px;
+    }
+    
+    @media (max-width: 600px) {
+      .profile-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .info {
+        min-width: 100%;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .btn, .back-btn {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-card">
+    <div class="header">
+      <h1>আমার প্রোফাইল</h1>
+      <p>Advance Business App</p>
+    </div>
+    
+    <img id="profilePic" class="profile-img" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture">
+    
+    <div class="info">
+      <h2 id="name">নাম: লোড হচ্ছে...</h2>
+      <p id="phone">মোবাইল: লোড হচ্ছে...</p>
+      <p id="email">ইমেইল: লোড হচ্ছে...</p>
+      <p id="username">ইউজারনেম: লোড হচ্ছে...</p>
+      
+      <div class="button-group">
+        <a href="dashboard.html" class="back-btn">ড্যাশবোর্ডে ফিরে যান</a>
+        <!-- EDIT বাটনে লিঙ্ক যোগ করুন -->
+        <a href="edit.html" class="btn" id="editBtn">এডিট করুন</a>
+        <a href="#" class="btn" id="logoutBtn" style="background: #f96262;">লগ আউট</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // লগইন চেক
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if (!isLoggedIn || isLoggedIn !== 'true') {
+        window.location.href = 'login.html';
+    }
+
+    // LocalStorage এবং সেশন স্টোরেজ থেকে ডেটা লোড করা
+    window.onload = function() {
+      const name = sessionStorage.getItem("name") || "---";
+      const phone = sessionStorage.getItem("phone") || "---";
+      const email = sessionStorage.getItem("email") || "---";
+      const username = sessionStorage.getItem("username") || "---";
+      
+      // ফটো URL (যদি থাকে)
+      const photo = localStorage.getItem("profilePhoto") || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+
+      document.getElementById("name").innerText = "নাম: " + name;
+      document.getElementById("phone").innerText = "মোবাইল: " + phone;
+      document.getElementById("email").innerText = "ইমেইল: " + email;
+      document.getElementById("username").innerText = "ইউজারনেম: " + username;
+      document.getElementById("profilePic").src = photo;
+      
+      // লগআউট বাটন ইভেন্ট
+      document.getElementById('logoutBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (confirm('আপনি কি নিশ্চিতভাবে লগআউট করতে চান?')) {
+          sessionStorage.clear();
+          window.location.href = 'login.html';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

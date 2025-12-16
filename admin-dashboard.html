@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>এডমিন ড্যাশবোর্ড - Advance Business App</title>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* General Body Styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #1a1f2e;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        /* লগইন চেক মেসেজ - FIXED POSITION */
+        .login-check-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .login-check-message {
+            background: #1a1f2e;
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+            max-width: 400px;
+            width: 90%;
+            border: 2px solid #e06952;
+            box-sizing: border-box;
+            position: relative;
+            left: 0;
+            transform: none;
+            margin: 0 auto;
+        }
+        
+        .login-check-message h2 {
+            color: #e06952;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .login-check-message button {
+            background: linear-gradient(135deg, #e06952, #c55a44);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+            width: 100%;
+            max-width: 250px;
+            box-sizing: border-box;
+        }
+        
+        /* Main App Container */
+        .app-container {
+            max-width: 480px;
+            margin: auto;
+            background-color: #1a1f2e;
+            min-height: 100vh;
+            padding-top: 70px;
+            padding-bottom: 70px;
+            position: relative;
+            transition: transform 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        /* Header Section */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #121921;
+            z-index: 100;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid #e06952;
+            box-sizing: border-box;
+        }
+        header .icon {
+            font-size: 22px;
+            color: #e06952;
+            cursor: pointer;
+        }
+        
+        /* App Name Styling */
+        .app-name {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #e06952 0%, #c55a44 50%, #ff8c00 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(224, 105, 82, 0.5);
+            position: relative;
+            padding: 0 5px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px rgba(224, 105, 82, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(224, 105, 82, 0.8); }
+        }
+
+        /* Greeting Section */
+        .greeting {
+            padding: 10px 20px;
+            box-sizing: border-box;
+        }
+        .greeting h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0;
+            color: #e06952;
+        }
+        .greeting p {
+            font-size: 14px;
+            margin: 4px 0 0;
+            color: #aaa;
+        }
+
+        /* Card Style */
+        .card {
+            background-color: rgba(18, 25, 33, 0.9);
+            margin: 15px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 1px solid rgba(224, 105, 82, 0.2);
+            box-sizing: border-box;
+        }
+
+        /* Slider Area */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .slide img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Quick Info Bar */
+        .quick-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .info-item {
+            text-align: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        .info-item:hover {
+            background: rgba(224, 105, 82, 0.1);
+            transform: translateY(-5px);
+        }
+        .info-item .icon-wrapper {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 8px;
+            transition: transform 0.2s ease;
+            box-sizing: border-box;
+        }
+        .info-item:hover .icon-wrapper {
+            transform: scale(1.1);
+        }
+        .info-item .icon-wrapper.manage-users { 
+            background: linear-gradient(45deg, #1877F2, #3b5998); 
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);
+        }
+        .info-item .icon-wrapper.user-reports { 
+            background: linear-gradient(45deg, #25D366, #128C7E);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        .info-item .icon-wrapper.earning-stats { 
+            background: linear-gradient(45deg, #0088cc, #2AABEE);
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+        }
+        .info-item .icon-wrapper.system-logs { 
+            background: linear-gradient(45deg, #FF0000, #c4302b);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+        }
+        .info-item i {
+            font-size: 24px;
+            color: white;
+        }
+        .info-item span {
+            font-size: 12px;
+            color: #fff;
+            font-weight: 500;
+        }
+       
+        /* Admin Management Section */
+        .section-title {
+            padding: 15px 20px 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #e06952;
+            box-sizing: border-box;
+        }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 10px 20px 25px;
+            box-sizing: border-box;
+        }
+        .admin-item {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 10px;
+            border-radius: 12px;
+            box-sizing: border-box;
+        }
+        .admin-item:hover {
+            transform: scale(1.05);
+            background: rgba(224, 105, 82, 0.1);
+        }
+        .admin-item .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid #e06952;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 8px;
+            color: #fff;
+            font-size: 28px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+        .admin-item:hover .icon-wrapper {
+            transform: scale(1.1);
+            box-shadow: 0 6px 18px rgba(224, 105, 82, 0.3);
+        }
+            
+        .admin-item .gradient-orange { background: linear-gradient(145deg, #ffb88c, #e06952); }
+        .admin-item .gradient-blue { background: linear-gradient(145deg, #89f7fe, #66a6ff); }
+        .admin-item .gradient-purple { background: linear-gradient(145deg, #c797d8, #8c78de); }
+        .admin-item .gradient-green { background: linear-gradient(145deg, #81FBB8, #28C76F); }
+        .admin-item .gradient-red { background: linear-gradient(145deg, #ff9a9e, #f96262); }
+        .admin-item .gradient-dark-blue { background: linear-gradient(145deg, #536976, #292E49); }
+        .admin-item .gradient-gold { background: linear-gradient(145deg, #FFD194, #D1913C); }
+        .admin-item .gradient-teal { background: linear-gradient(145deg, #00d2ff, #3a7bd5); }
+        .admin-item span {
+            font-size: 12px;
+            font-weight: 500;
+            color: #fff;         
+        }
+
+        /* Bottom Navigation Bar */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            background-color: #121921;
+            border-top: 2px solid #e06952;
+            z-index: 1000;
+            padding: 5px 0;
+            box-sizing: border-box;
+        }
+        .nav-item {
+            text-align: center;
+            cursor: pointer;
+            color: #aaa;
+            flex: 1;
+            padding: 10px 0;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .nav-item.active {
+            color: #e06952;
+            transform: translateY(-3px);
+        }
+        .nav-item .icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        .nav-item .label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Side Menu Styles */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: #121921;
+            z-index: 2000;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        
+        .side-menu.open {
+            left: 0;
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .menu-header {
+            background: #e06952;
+            padding: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            position: relative;
+            box-sizing: border-box;
+        }
+        
+        .close-menu {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #fff;
+            font-size: 24px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid white;
+            box-sizing: border-box;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .profile-details h3 {
+            margin: 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .verified-badge {
+            color: #4CD964;
+            margin-left: 5px;
+        }
+        
+        .profile-details p {
+            margin: 5px 0 0;
+            font-size: 14px;
+        }
+        
+        .profile-details .admin-badge {
+            display: inline-block;
+            background: #ff8c00;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .menu-items {
+            padding: 10px 0;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: #fff;
+            text-decoration: none;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        
+        .menu-item:hover {
+            background: rgba(224, 105, 82, 0.2);
+        }
+        
+        .menu-item i {
+            width: 30px;
+            font-size: 18px;
+            margin-right: 15px;
+        }
+        
+        .menu-item.home i { color: #e06952; }
+        .menu-item.profile i { color: #e06952; }
+        .menu-item.users i { color: #4CD964; }
+        .menu-item.reports i { color: #66a6ff; }
+        .menu-item.settings i { color: #c4302b; }
+        .menu-item.analytics i { color: #8c78de; }
+        .menu-item.logs i { color: #536976; }
+        .menu-item.logout i { color: #f96262; }
+        
+        .menu-item span {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* App content shift when menu is open */
+        .app-container.shifted {
+            transform: translateX(10px);
+        }
+        
+        /* Admin Stats Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .stat-card {
+            background: rgba(224, 105, 82, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(224, 105, 82, 0.2);
+            box-sizing: border-box;
+        }
+        
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #e06952;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .label {
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        /* Disable text selection */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* Modal Styles - FIXED FOR SMALL SCREENS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9998;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: #1a1f2e;
+            border-radius: 15px;
+            max-width: 450px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid #e06952;
+            box-sizing: border-box;
+            position: relative;
+            margin: 20px auto;
+        }
+        
+        .modal-header {
+            background: #e06952;
+            padding: 15px 20px;
+            border-radius: 13px 13px 0 0;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            box-sizing: border-box;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+        
+        .modal-body {
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        /* User Reports Tracking Styles */
+        .tracking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        
+        .tracking-table th {
+            background: #e06952;
+            color: white;
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 12px;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        
+        .tracking-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 11px;
+            color: #ddd;
+            box-sizing: border-box;
+        }
+        
+        .tracking-table tr:hover {
+            background: rgba(224, 105, 82, 0.1);
+        }
+        
+        .tracking-badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .badge-login { background: #4CAF50; color: white; }
+        .badge-signup { background: #2196F3; color: white; }
+        .badge-alert { background: #f44336; color: white; }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .modal-content {
+                margin: 10px;
+                max-height: 85vh;
+            }
+            
+            .modal-header h3 {
+                font-size: 16px;
+            }
+            
+            .tracking-table {
+                font-size: 10px;
+            }
+            
+            .tracking-table th,
+            .tracking-table td {
+                padding: 8px 5px;
+            }
+            
+            .login-check-message {
+                padding: 20px;
+            }
+            
+            .login-check-message h2 {
+                font-size: 18px;
+            }
+        }
+        
+        /* Earnings specific styles */
+        .earnings-modal .modal-content {
+            border-color: #4CAF50;
+        }
+        
+        .earnings-modal .modal-header {
+            background: #4CAF50;
+        }
+        
+        /* Stats Grid Adjustments */
+        .stats-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e06952;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body class="no-select">
+    
+    <!-- লগইন চেক ওভারলে - FIXED POSITION -->
+    <div class="login-check-overlay" id="loginCheckOverlay">
+        <div class="login-check-message">
+            <h2>এডমিন এক্সেস প্রয়োজন!</h2>
+            <p>এডমিন ড্যাশবোর্ড দেখতে আপনাকে এডমিন হিসাবে লগইন করতে হবে।</p>
+            <button onclick="goToLogin()">এডমিন লগইন করুন</button>
+        </div>
+    </div>
+    
+    <!-- User Reports Modal -->
+    <div class="modal-overlay" id="reportsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin: 0; font-size: 18px;"><i class="fas fa-chart-bar"></i> ইউজার ট্র্যাকিং রিপোর্ট</h3>
+                <button class="modal-close" onclick="closeReportsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tracking-filters" style="margin-bottom: 15px;">
+                    <select id="trackingFilter" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.1); border: 1px solid #e06952; border-radius: 8px; color: white; font-size: 14px; box-sizing: border-box;">
+                        <option value="all">সব ইভেন্ট</option>
+                        <option value="login">লগইন</option>
+                        <option value="signup">সাইনআপ</option>
+                        <option value="alert">অ্যালার্ট</option>
+                    </select>
+                </div>
+                <div class="stats-grid-3">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalLogins">0</div>
+                        <div class="stat-label">লগইন</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalSignups">0</div>
+                        <div class="stat-label">সাইনআপ</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalAlerts">0</div>
+                        <div class="stat-label">অ্যালার্ট</div>
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="tracking-table">
+                        <thead>
+                            <tr>
+                                <th>ইউজার</th>
+                                <th>ইভেন্ট</th>
+                                <th>সময়</th>
+                                <th>আইপি</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trackingTableBody">
+                            <!-- Tracking data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings Modal -->
+    <div class="modal-overlay earnings-modal" id="earningsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin: 0; font-size: 18px;"><i class="fas fa-money-bill-wave"></i> আয়ের বিশদ বিবরণ</h3>
+                <button class="modal-close" onclick="closeEarningsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 28px; font-weight: bold; color: #4CAF50;" id="modalTotalEarnings">৳0</div>
+                    <div style="font-size: 14px; color: #aaa;">আজকের মোট আয়</div>
+                    <div style="font-size: 12px; color: #888; margin-top: 5px;" id="earningsDate"></div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #e06952; margin-bottom: 10px; font-size: 16px;">শীর্ষ ৫ আয়কারী</h4>
+                    <div id="topEarnersList" style="background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px;">
+                        <!-- Top earners will be loaded here -->
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #e06952; margin-bottom: 10px; font-size: 16px;">আয়ের সারাংশ</h4>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                        <div style="background: rgba(76, 175, 80, 0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 18px; font-weight: bold; color: #4CAF50;" id="averageEarning">৳0</div>
+                            <div style="font-size: 12px; color: #aaa;">গড় আয়</div>
+                        </div>
+                        <div style="background: rgba(255, 152, 0, 0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 18px; font-weight: bold; color: #FF9800;" id="topEarnerAmount">৳0</div>
+                            <div style="font-size: 12px; color: #aaa;">সর্বোচ্চ আয়</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- লগইন চেক স্ক্রিপ্ট -->
+    <script>
+        // লগইন চেক ফাংশন
+        function checkLoginStatus() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            const isAdmin = sessionStorage.getItem('isAdmin');
+            const loginCheckOverlay = document.getElementById('loginCheckOverlay');
+            
+            if (!isLoggedIn || isLoggedIn !== 'true' || isAdmin !== 'true') {
+                // শুধুমাত্র এডমিন না হলে ওভারলে দেখান
+                if (loginCheckOverlay) {
+                    loginCheckOverlay.style.display = 'flex';
+                }
+                return false;
+            } else {
+                // এডমিন হলে ওভারলে লুকান
+                if (loginCheckOverlay) {
+                    loginCheckOverlay.style.display = 'none';
+                }
+                
+                // এডমিন ইউজারের নাম দেখানো
+                const userName = sessionStorage.getItem('name') || 'এডমিন';
+                const userPhone = sessionStorage.getItem('phone') || '+880 1XXX-XXXXXX';
+                const userEmail = sessionStorage.getItem('email') || '';
+                
+                const userNameElements = document.querySelectorAll('.greeting h1');
+                if (userNameElements.length > 0) {
+                    userNameElements[0].textContent = `এডমিন, ${userName}`;
+                }
+                
+                // সাইড মেনুতে ইউজার ইনফো আপডেট
+                const profileName = document.querySelector('.profile-details h3');
+                const profilePhone = document.querySelector('.profile-details p');
+                
+                if (profileName) {
+                    profileName.innerHTML = `${userName} <span class="admin-badge">এডমিন</span>`;
+                }
+                
+                if (profilePhone) {
+                    profilePhone.textContent = userPhone;
+                }
+                
+                // এডমিন স্ট্যাটস লোড করুন
+                loadAdminStats();
+                
+                return true;
+            }
+        }
+        
+        // ২৪ ঘণ্টার আয় ক্যালকুলেটর
+        function calculate24HourEarnings(users) {
+            try {
+                const today = new Date().toDateString();
+                const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toDateString();
+                
+                let todayEarnings = 0;
+                let yesterdayEarnings = 0;
+                
+                // প্রতিটি ইউজারের আয় পরীক্ষা করুন
+                users.forEach(user => {
+                    const userIncome = parseFloat(user.income) || 0;
+                    
+                    // যদি ইউজারের লাস্ট আপডেট ডেট থাকে
+                    if (user.lastUpdated) {
+                        const lastUpdatedDate = new Date(user.lastUpdated).toDateString();
+                        if (lastUpdatedDate === today) {
+                            todayEarnings += userIncome;
+                        } else if (lastUpdatedDate === yesterday) {
+                            yesterdayEarnings += userIncome;
+                        }
+                    } else {
+                        // ডিফল্ট হিসেবে আজকের আয় হিসেবে গণনা করুন
+                        todayEarnings += userIncome;
+                    }
+                });
+                
+                // ডেমো ইউজারদের জন্য
+                if (users.length <= 2 && users.every(u => ['admin', 'demo'].includes(u.username))) {
+                    const demoIncomes = [50000, 12000, 8000, 3000, 15000];
+                    todayEarnings = demoIncomes.reduce((a, b) => a + b, 0);
+                    
+                    // প্রতিদিন র‍্যান্ডমভাবে ১০-২০% পরিবর্তন
+                    const changePercent = 0.1 + (Math.random() * 0.1); // ১০-২০%
+                    const changeAmount = todayEarnings * changePercent;
+                    yesterdayEarnings = Math.round(todayEarnings - (Math.random() > 0.5 ? changeAmount : -changeAmount));
+                }
+                
+                // লোকাল স্টোরেজে সেভ করুন
+                const earningsHistory = JSON.parse(localStorage.getItem('earnings_history')) || [];
+                const existingToday = earningsHistory.find(e => e.date === today);
+                
+                if (!existingToday) {
+                    earningsHistory.push({
+                        date: today,
+                        earnings: todayEarnings,
+                        users: users.length
+                    });
+                    
+                    // শুধুমাত্র সর্বশেষ ৩০ দিনের ডেটা রাখুন
+                    if (earningsHistory.length > 30) {
+                        earningsHistory.shift();
+                    }
+                    
+                    localStorage.setItem('earnings_history', JSON.stringify(earningsHistory));
+                }
+                
+                return {
+                    today: todayEarnings,
+                    yesterday: yesterdayEarnings,
+                    change: yesterdayEarnings > 0 ? ((todayEarnings - yesterdayEarnings) / yesterdayEarnings * 100).toFixed(1) : 0
+                };
+                
+            } catch (error) {
+                console.error('Error calculating 24-hour earnings:', error);
+                return {
+                    today: 88000,
+                    yesterday: 75000,
+                    change: 17.3
+                };
+            }
+        }
+        
+        // এডমিন স্ট্যাটস লোড করার ফাংশন - সংশোধিত
+        function loadAdminStats() {
+            try {
+                // লোকাল স্টোরেজ থেকে ইউজার ডেটা লোড করুন
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                
+                // সঠিকভাবে মোট ইউজার গণনা করুন
+                const totalUsers = users.length;
+                
+                // ২৪ ঘণ্টার আয় গণনা করুন
+                const earnings24h = calculate24HourEarnings(users);
+                
+                // ব্লকড ইউজার গণনা করুন
+                const blockedUsers = users.filter(user => user.status === 'blocked').length;
+                
+                // পেন্ডিং রিকোয়েস্ট গণনা
+                const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+                let pendingRequests = transactions.filter(t => t.status === 'pending').length;
+                
+                // যদি কোনো ট্রানজ্যাকশন না থাকে, ব্লকড ইউজারকে পেন্ডিং হিসেবে দেখান
+                if (pendingRequests === 0) {
+                    pendingRequests = blockedUsers || Math.max(1, Math.floor(totalUsers * 0.1));
+                }
+                
+                // স্ট্যাটস আপডেট করুন
+                document.getElementById('totalUsers').textContent = totalUsers;
+                document.getElementById('activeUsers').textContent = totalUsers - blockedUsers; // ব্লকড ইউজার ছাড়া বাকি সব
+                document.getElementById('totalEarnings').textContent = '৳' + earnings24h.today.toLocaleString();
+                document.getElementById('pendingRequests').textContent = pendingRequests;
+                
+                // ইউজার ট্র্যাকিং ডেটা লোড করুন
+                loadTrackingData();
+                
+                // আয়ের ডেটা লোড করুন
+                loadEarningsData(users, earnings24h);
+                
+            } catch (error) {
+                console.error('Error loading admin stats:', error);
+                // ইরর হলে ডেমো ডেটা দেখান
+                document.getElementById('totalUsers').textContent = '5';
+                document.getElementById('activeUsers').textContent = '4';
+                document.getElementById('totalEarnings').textContent = '৳88,000';
+                document.getElementById('pendingRequests').textContent = '2';
+            }
+        }
+        
+        // ইউজার ট্র্যাকিং ডেটা লোড করুন
+        function loadTrackingData() {
+            try {
+                const trackingData = JSON.parse(localStorage.getItem('tracking_data')) || [];
+                
+                // বিভিন্ন ইভেন্টের সংখ্যা গণনা
+                const loginCount = trackingData.filter(item => item.event === 'login').length;
+                const signupCount = trackingData.filter(item => item.event === 'signup').length;
+                const alertCount = trackingData.filter(item => item.event === 'alert').length;
+                
+                // স্ট্যাটস আপডেট করুন
+                document.getElementById('totalLogins').textContent = loginCount;
+                document.getElementById('totalSignups').textContent = signupCount;
+                document.getElementById('totalAlerts').textContent = alertCount;
+                
+                // টেবিল ডেটা লোড করুন
+                loadTrackingTable('all');
+                
+            } catch (error) {
+                console.error('Error loading tracking data:', error);
+            }
+        }
+        
+        // ট্র্যাকিং টেবিল লোড করুন
+        function loadTrackingTable(filter) {
+            try {
+                const trackingData = JSON.parse(localStorage.getItem('tracking_data')) || [];
+                const tbody = document.getElementById('trackingTableBody');
+                tbody.innerHTML = '';
+                
+                // ফিল্টার প্রয়োগ করুন
+                let filteredData = trackingData;
+                if (filter !== 'all') {
+                    filteredData = trackingData.filter(item => item.event === filter);
+                }
+                
+                // সর্বশেষ ১০টি রেকর্ড দেখান
+                const recentData = filteredData.slice(-10).reverse();
+                
+                if (recentData.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="4" style="text-align: center; padding: 20px; color: #888;">
+                                কোনো ট্র্যাকিং ডেটা পাওয়া যায়নি
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                recentData.forEach(item => {
+                    const row = document.createElement('tr');
+                    
+                    // ইভেন্ট বেজ তৈরি করুন
+                    let eventBadge = '';
+                    if (item.event === 'login') {
+                        eventBadge = '<span class="tracking-badge badge-login">লগইন</span>';
+                    } else if (item.event === 'signup') {
+                        eventBadge = '<span class="tracking-badge badge-signup">সাইনআপ</span>';
+                    } else {
+                        eventBadge = '<span class="tracking-badge badge-alert">অ্যালার্ট</span>';
+                    }
+                    
+                    // তারিখ ফরম্যাট করুন
+                    let formattedTime = item.timestamp || 'অজানা সময়';
+                    try {
+                        const date = new Date(item.timestamp);
+                        if (!isNaN(date.getTime())) {
+                            formattedTime = date.toLocaleString('bn-BD', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                        }
+                    } catch (e) {
+                        console.log('Date parsing error:', e);
+                    }
+                    
+                    // IP সংক্ষিপ্ত করুন
+                    let displayIP = item.ipAddress || 'N/A';
+                    if (displayIP.length > 15) {
+                        displayIP = displayIP.substring(0, 12) + '...';
+                    }
+                    
+                    row.innerHTML = `
+                        <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis;">
+                            <div style="font-weight: 600; color: white; font-size: 11px;">${item.name || item.username || 'N/A'}</div>
+                        </td>
+                        <td>${eventBadge}</td>
+                        <td style="font-size: 10px; white-space: nowrap;">${formattedTime}</td>
+                        <td style="font-size: 10px;">${displayIP}</td>
+                    `;
+                    
+                    tbody.appendChild(row);
+                });
+                
+            } catch (error) {
+                console.error('Error loading tracking table:', error);
+            }
+        }
+        
+        // আয়ের ডেটা লোড করুন
+        function loadEarningsData(users, earnings24h) {
+            try {
+                // আজকের তারিখ দেখান
+                const today = new Date();
+                const dateStr = today.toLocaleDateString('bn-BD', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                document.getElementById('earningsDate').textContent = dateStr;
+                
+                // মোট আয় দেখান
+                document.getElementById('modalTotalEarnings').textContent = '৳' + earnings24h.today.toLocaleString();
+                
+                // শীর্ষ ৫ আয়কারী
+                const topEarners = [...users]
+                    .sort((a, b) => (b.income || 0) - (a.income || 0))
+                    .slice(0, 5);
+                
+                const topEarnersList = document.getElementById('topEarnersList');
+                topEarnersList.innerHTML = '';
+                
+                if (topEarners.length === 0) {
+                    topEarnersList.innerHTML = '<div style="text-align: center; padding: 20px; color: #888;">কোনো ডেটা নেই</div>';
+                } else {
+                    topEarners.forEach((user, index) => {
+                        const earnings = user.income || 0;
+                        const percentage = earnings24h.today > 0 ? (earnings / earnings24h.today * 100).toFixed(1) : 0;
+                        
+                        const item = document.createElement('div');
+                        item.style.cssText = `
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 10px;
+                            background: rgba(255,255,255,0.05);
+                            border-radius: 8px;
+                            margin-bottom: 8px;
+                        `;
+                        
+                        item.innerHTML = `
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-weight: 600; color: white; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    ${index + 1}. ${user.name || user.username}
+                                </div>
+                                <div style="font-size: 10px; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.username}</div>
+                            </div>
+                            <div style="text-align: right; margin-left: 10px;">
+                                <div style="font-weight: bold; color: #4CAF50; font-size: 12px; white-space: nowrap;">
+                                    ৳${earnings.toLocaleString()}
+                                </div>
+                                <div style="font-size: 9px; color: #aaa;">${percentage}%</div>
+                            </div>
+                        `;
+                        
+                        topEarnersList.appendChild(item);
+                    });
+                }
+                
+                // গড় আয় এবং সর্বোচ্চ আয়
+                const averageEarning = users.length > 0 ? earnings24h.today / users.length : 0;
+                const topEarnerAmount = users.length > 0 ? Math.max(...users.map(u => u.income || 0)) : 0;
+                
+                document.getElementById('averageEarning').textContent = '৳' + Math.round(averageEarning).toLocaleString();
+                document.getElementById('topEarnerAmount').textContent = '৳' + topEarnerAmount.toLocaleString();
+                
+            } catch (error) {
+                console.error('Error loading earnings data:', error);
+            }
+        }
+        
+        // লগইন পেজে যাওয়ার ফাংশন
+        function goToLogin() {
+            window.location.href = 'login.html';
+        }
+        
+        // লগআউট ফাংশন
+        function logoutUser() {
+            if (confirm('আপনি কি নিশ্চিতভাবে এডমিন থেকে লগআউট করতে চান?')) {
+                sessionStorage.clear();
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // মডাল খোলার ফাংশন
+        function openReportsModal() {
+            document.getElementById('reportsModal').style.display = 'flex';
+            loadTrackingData();
+        }
+        
+        function closeReportsModal() {
+            document.getElementById('reportsModal').style.display = 'none';
+        }
+        
+        function openEarningsModal() {
+            document.getElementById('earningsModal').style.display = 'flex';
+            // আয়ের ডেটা রিফ্রেশ করুন
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const earnings24h = calculate24HourEarnings(users);
+            loadEarningsData(users, earnings24h);
+        }
+        
+        function closeEarningsModal() {
+            document.getElementById('earningsModal').style.display = 'none';
+        }
+        
+        // ট্র্যাকিং ফিল্টার পরিবর্তন
+        function setupTrackingFilter() {
+            const filterSelect = document.getElementById('trackingFilter');
+            if (filterSelect) {
+                filterSelect.addEventListener('change', function(e) {
+                    loadTrackingTable(e.target.value);
+                });
+            }
+        }
+        
+        // মডাল বাইরে ক্লিক করলে বন্ধ হবে
+        function setupModalCloseOnOutsideClick() {
+            const modals = document.querySelectorAll('.modal-overlay');
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        // পেজ লোড হওয়ার সময় লগইন চেক করুন
+        document.addEventListener('DOMContentLoaded', function() {
+            // প্রথমে লগইন চেক করুন
+            const isLoggedIn = checkLoginStatus();
+            
+            // শুধুমাত্র এডমিন লগইন করলে বাকি ফাংশনালিটি লোড করুন
+            if (isLoggedIn) {
+                initializeAdminDashboard();
+                setupTrackingFilter();
+                setupModalCloseOnOutsideClick();
+                
+                // প্রতি ৫ মিনিটে স্ট্যাটস রিফ্রেশ করুন
+                setInterval(loadAdminStats, 5 * 60 * 1000);
+            }
+        });
+        
+        // এডমিন ড্যাশবোর্ড ইনিশিয়ালাইজ ফাংশন
+        function initializeAdminDashboard() {
+            // Slider Functionality
+            function initializeSlider(sliderId) {
+                const slider = document.getElementById(sliderId);
+                if (!slider) return;
+
+                const sliderWrapper = slider.querySelector('.slider-wrapper');
+                const slides = slider.querySelectorAll('.slide');
+                if (slides.length <= 1) return;
+                let currentIndex = 0;
+
+                function showNextSlide() {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+                }
+                setInterval(showNextSlide, 3500);
+            }
+
+            // Menu Toggle Functionality
+            const menuToggle = document.getElementById('menu-toggle');
+            const closeMenu = document.getElementById('close-menu');
+            const sideMenu = document.getElementById('side-menu');
+            const menuOverlay = document.getElementById('menu-overlay');
+            const appContainer = document.getElementById('app-container');
+
+            function openMenu() {
+                sideMenu.classList.add('open');
+                menuOverlay.classList.add('open');
+                appContainer.classList.add('shifted');
+            }
+
+            function closeSideMenu() {
+                sideMenu.classList.remove('open');
+                menuOverlay.classList.remove('open');
+                appContainer.classList.remove('shifted');
+            }
+
+            if (menuToggle) menuToggle.addEventListener('click', openMenu);
+            if (closeMenu) closeMenu.addEventListener('click', closeSideMenu);
+            if (menuOverlay) menuOverlay.addEventListener('click', closeSideMenu);
+
+            // Admin Functionality
+            const adminItems = document.querySelectorAll('.admin-item');
+            adminItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const action = this.getAttribute('data-action');
+                    handleAdminAction(action);
+                });
+            });
+            
+            const quickInfoItems = document.querySelectorAll('.info-item');
+            quickInfoItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const action = this.getAttribute('data-action');
+                    handleAdminAction(action);
+                });
+            });
+            
+            function handleAdminAction(action) {
+                switch(action) {
+                    case 'manage-users':
+                        window.location.href = 'users-management.html';
+                        break;
+                    case 'user-reports':
+                        openReportsModal();
+                        break;
+                    case 'earning-stats':
+                        openEarningsModal();
+                        break;
+                    case 'system-logs':
+                        alert('সিস্টেম লগস দেখানো হচ্ছে... (প্রি-ভিউ)');
+                        break;
+                    case 'payment-history':
+                        alert('পেমেন্ট হিস্ট্রি লোড হচ্ছে... (প্রি-ভিউ)');
+                        break;
+                    case 'withdrawal-requests':
+                        alert('উইথড্রয়ার রিকোয়েস্ট ম্যানেজমেন্ট... (প্রি-ভিউ)');
+                        break;
+                    case 'notification-center':
+                        alert('নোটিফিকেশন সেন্টার... (প্রি-ভিউ)');
+                        break;
+                    case 'content-management':
+                        alert('কন্টেন্ট ম্যানেজমেন্ট প্যানেল... (প্রি-ভিউ)');
+                        break;
+                    default:
+                        alert('এডমিন ফিচার শীঘ্রই আসছে!');
+                }
+            }
+
+            // Initialize sliders
+            initializeSlider('top-slider');
+            initializeSlider('bottom-slider');
+            
+            // লগআউট বাটনে ইভেন্ট লিসেনার যোগ করুন
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logoutUser();
+                });
+            }
+            
+            // এডমিন মেনু আইটেম সেট করুন
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const menuAction = this.classList[1];
+                    if (menuAction !== 'logout') {
+                        e.preventDefault();
+                        handleMenuAction(menuAction);
+                    }
+                });
+            });
+            
+            function handleMenuAction(action) {
+                switch(action) {
+                    case 'home':
+                        closeSideMenu();
+                        break;
+                    case 'users':
+                        window.location.href = 'users-management.html';
+                        break;
+                    case 'reports':
+                        openReportsModal();
+                        break;
+                    case 'analytics':
+                        openEarningsModal();
+                        break;
+                    case 'logs':
+                        alert('সিস্টেম লগস... (প্রি-ভিউ)');
+                        break;
+                    case 'settings':
+                        alert('এডমিন সেটিংস... (প্রি-ভিউ)');
+                        break;
+                    default:
+                        alert('এডমিন ফিচার শীঘ্রই আসছে!');
+                }
+            }
+        }
+        
+        // Escape key press to close modals
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeReportsModal();
+                closeEarningsModal();
+            }
+        });
+    </script>
+
+    <div class="app-container" id="app-container">
+
+        <!-- Header -->
+        <header>
+            <div class="icon" id="menu-toggle"><i class="fas fa-bars"></i></div>
+            <div class="app-name">এডমিন প্যানেল</div>
+            <div class="icon"><i class="fas fa-shield-alt"></i></div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Greeting -->
+            <div class="greeting">
+                <h1>এডমিন, স্বাগতম!</h1>
+                <p>সিস্টেম অ্যাডমিনিস্ট্রেশন প্যানেল</p>
+            </div>
+
+            <!-- Admin Stats -->
+            <div class="card">
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="value" id="totalUsers">0</div>
+                        <div class="label">মোট ইউজার</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="activeUsers">0</div>
+                        <div class="label">অ্যাক্টিভ ইউজার</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="totalEarnings">৳0</div>
+                        <div class="label">আজকের আয়</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="pendingRequests">0</div>
+                        <div class="label">পেন্ডিং রিকোয়েস্ট</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card quick-info">
+                <div class="info-item" data-action="manage-users">
+                    <div class="icon-wrapper manage-users"><i class="fas fa-users-cog"></i></div>
+                    <span>ইউজার ম্যানেজমেন্ট</span>
+                </div>
+                <div class="info-item" data-action="user-reports">
+                    <div class="icon-wrapper user-reports"><i class="fas fa-chart-bar"></i></div>
+                    <span>ইউজার রিপোর্ট</span>
+                </div>
+                <div class="info-item" data-action="earning-stats">
+                    <div class="icon-wrapper earning-stats"><i class="fas fa-money-bill-wave"></i></div>
+                    <span>আয়ের স্ট্যাটস</span>
+                </div>
+                <div class="info-item" data-action="system-logs">
+                    <div class="icon-wrapper system-logs"><i class="fas fa-clipboard-list"></i></div>
+                    <span>সিস্টেম লগস</span>
+                </div>
+            </div>
+
+            <!-- Admin Management Section -->
+            <div class="card">
+                <div class="section-title">এডমিন ম্যানেজমেন্ট</div>
+                <div class="admin-grid">
+                    <!-- Row 1 -->
+                    <div class="admin-item" data-action="payment-history">
+                        <div class="icon-wrapper gradient-orange"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <span>পেমেন্ট হিস্ট্রি</span>
+                    </div>
+                    <div class="admin-item" data-action="withdrawal-requests">
+                        <div class="icon-wrapper gradient-blue"><i class="fas fa-hand-holding-usd"></i></div>
+                        <span>উইথড্রয়ার রিকোয়েস্ট</span>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="admin-item" data-action="notification-center">
+                        <div class="icon-wrapper gradient-purple"><i class="fas fa-bell"></i></div>
+                        <span>নোটিফিকেশন সেন্টার</span>
+                    </div>
+                    <div class="admin-item" data-action="content-management">
+                        <div class="icon-wrapper gradient-green"><i class="fas fa-edit"></i></div>
+                        <span>কন্টেন্ট ম্যানেজমেন্ট</span>
+                    </div>
+                    <!-- Row 3 -->
+                    <div class="admin-item" data-action="database-backup">
+                        <div class="icon-wrapper gradient-red"><i class="fas fa-database"></i></div>
+                        <span>ডেটাবেজ ব্যাকআপ</span>
+                    </div>
+                    <div class="admin-item" data-action="security-settings">
+                        <div class="icon-wrapper gradient-dark-blue"><i class="fas fa-user-shield"></i></div>
+                        <span>সিকিউরিটি সেটিংস</span>
+                    </div>
+                    <!-- Row 4 -->
+                    <div class="admin-item" data-action="system-settings">
+                        <div class="icon-wrapper gradient-gold"><i class="fas fa-cog"></i></div>
+                        <span>সিস্টেম সেটিংস</span>
+                    </div>
+                    <div class="admin-item" data-action="support-management">
+                        <div class="icon-wrapper gradient-teal"><i class="fas fa-headset"></i></div>
+                        <span>সাপোর্ট ম্যানেজমেন্ট</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Status Slider -->
+            <div class="card">
+                <div class="slider-container" id="top-slider">
+                    <div class="slider-wrapper">
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=480&h=180&fit=crop&q=80" alt="System Analytics"></div>
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=480&h=180&fit=crop&q=80" alt="Data Dashboard"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Bottom Navigation -->
+        <footer>
+            <div class="nav-item active">
+                <div class="icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="label">ড্যাশবোর্ড</div>
+            </div>
+            <div class="nav-item">
+                <div class="icon"><i class="fas fa-users"></i></div>
+                <div class="label">ইউজারস</div>
+            </div>
+            <div class="nav-item">
+                <div class="icon"><i class="fas fa-chart-line"></i></div>
+                <div class="label">এনালিটিক্স</div>
+            </div>
+            <div class="nav-item">
+                <div class="icon"><i class="fas fa-cog"></i></div>
+                <div class="label">সেটিংস</div>
+            </div>
+        </footer>
+        
+        <!-- Menu Overlay -->
+        <div class="menu-overlay" id="menu-overlay"></div>
+        
+        <!-- Side Menu -->
+        <div class="side-menu" id="side-menu">
+            <div class="menu-header">
+                <div class="profile-info">
+                    <div class="profile-img">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="profile-details">
+                        <h3>সিস্টেম এডমিন <span class="admin-badge">এডমিন</span></h3>
+                        <p>Admin Access Level</p>
+                    </div>
+                </div>
+                <div class="close-menu" id="close-menu">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            
+            <div class="menu-items">
+                <a href="#" class="menu-item home">
+                    <i class="fas fa-home"></i>
+                    <span>এডমিন ড্যাশবোর্ড</span>
+                </a>
+                <a href="#" class="menu-item users">
+                    <i class="fas fa-users-cog"></i>
+                    <span>ইউজার ম্যানেজমেন্ট</span>
+                </a>
+                <a href="#" class="menu-item reports">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>ডিটেইলড রিপোর্টস</span>
+                </a>
+                <a href="#" class="menu-item analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>সিস্টেম এনালিটিক্স</span>
+                </a>
+                <a href="#" class="menu-item logs">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>অ্যাকটিভিটি লগস</span>
+                </a>
+                <a href="#" class="menu-item settings">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>এডভান্সড সেটিংস</span>
+                </a>
+                <a href="#" class="menu-item logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>এডমিন লগআউট</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

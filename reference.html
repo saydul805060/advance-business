@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Advance Business - রেফার সিস্টেম</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f8fa;
+            color: #333;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-top: 70px;
+            padding-bottom: 80px;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: #ff8c00;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(255, 140, 0, 0.2);
+        }
+        
+        .back-btn {
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        
+        .page-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .header-right {
+            width: 30px;
+        }
+        
+        /* Main Content */
+        .container {
+            padding: 20px;
+        }
+        
+        /* Referral Link Card */
+        .referral-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .referral-card h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .referral-link-box {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+        }
+        
+        .referral-link {
+            font-family: monospace;
+            font-size: 14px;
+            word-break: break-all;
+            text-align: left;
+            flex: 1;
+            padding-right: 10px;
+        }
+        
+        .copy-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .share-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .whatsapp { background: #25D366; }
+        .facebook { background: #1877F2; }
+        .telegram { background: #0088cc; }
+        .messenger { background: #006AFF; }
+        
+        /* Stats Tabs */
+        .stats-tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-tab {
+            background: white;
+            border-radius: 15px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-tab.active {
+            background: #ff8c00;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.2);
+        }
+        
+        .stat-tab:hover:not(.active) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-tab .number {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-tab .label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* User ID Box */
+        .user-id-box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .user-id-box h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .user-id-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff8c00;
+            background: #fff8f0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px 0;
+            border: 2px dashed #ff8c00;
+        }
+        
+        .user-rank {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+        
+        .rank-badge {
+            display: inline-block;
+            background: #ff8c00;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        /* Referral List */
+        .referral-list-container {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+        
+        .list-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .list-header h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .list-header p {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        .referral-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+        
+        .referral-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        
+        .referral-item:hover {
+            background: #f9f9f9;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff8c00, #ffb347);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .user-detail-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-detail-row i {
+            width: 16px;
+            text-align: center;
+        }
+        
+        .referral-count {
+            background: #e8f4ff;
+            color: #1890ff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .join-date {
+            background: #f0f7ff;
+            color: #1890ff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        /* ID Search */
+        .id-search-container {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .id-search-container h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #ff8c00;
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
+        }
+        
+        .search-btn {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-btn:hover {
+            background: #e67e00;
+            transform: translateY(-2px);
+        }
+        
+        .search-label {
+            font-size: 14px;
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .user-details-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .user-details-card.active {
+            display: block;
+        }
+        
+        .user-details-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .user-details-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 22px;
+            margin-right: 15px;
+        }
+        
+        .user-details-text h4 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .user-details-text p {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .detail-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #ff8c00;
+        }
+        
+        .detail-item .label {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .detail-item .value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .profile-btn {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        .profile-btn:hover {
+            background: #e67e00;
+            transform: translateY(-2px);
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #eee;
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            text-align: center;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+        
+        .nav-item.active {
+            color: #ff8c00;
+            transform: translateY(-5px);
+        }
+        
+        .nav-item i {
+            font-size: 22px;
+            margin-bottom: 4px;
+            display: block;
+        }
+        
+        .nav-item span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 400px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .stats-tabs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="back-btn" onclick="goBack()">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+        <div class="page-title">রেফার সিস্টেম</div>
+        <div class="header-right"></div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Referral Link Card -->
+        <div class="referral-card">
+            <h3>আপনার রেফারেল লিংক শেয়ার করুন</h3>
+            <div class="referral-link-box">
+                <div class="referral-link" id="referralLink">
+                    লোড হচ্ছে...
+                </div>
+                <button class="copy-btn" onclick="copyReferralLink()">
+                    <i class="fas fa-copy"></i> কপি করুন
+                </button>
+            </div>
+            <div class="share-buttons">
+                <button class="share-btn whatsapp" onclick="shareViaWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                </button>
+                <button class="share-btn facebook" onclick="shareViaFacebook()">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="share-btn telegram" onclick="shareViaTelegram()">
+                    <i class="fab fa-telegram-plane"></i>
+                </button>
+                <button class="share-btn messenger" onclick="shareViaMessenger()">
+                    <i class="fab fa-facebook-messenger"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- User ID Box -->
+        <div class="user-id-box">
+            <h4>আপনার রেফার আইডি</h4>
+            <div class="user-id-value" id="userReferralId">লোড হচ্ছে...</div>
+            <div class="user-rank">
+                আপনার রেফার সংখ্যা: 
+                <span class="rank-badge" id="totalReferralCount">0</span>
+            </div>
+        </div>
+        
+        <!-- Stats Tabs -->
+        <div class="stats-tabs">
+            <div class="stat-tab active" onclick="showReferrals('today')">
+                <div class="number" id="todayCount">0</div>
+                <div class="label">আজকের রেফার</div>
+            </div>
+            <div class="stat-tab" onclick="showReferrals('week')">
+                <div class="number" id="weekCount">0</div>
+                <div class="label">এই সপ্তাহ</div>
+            </div>
+            <div class="stat-tab" onclick="showReferrals('month')">
+                <div class="number" id="monthCount">0</div>
+                <div class="label">এই মাস</div>
+            </div>
+            <div class="stat-tab" onclick="showReferrals('total')">
+                <div class="number" id="totalCount">0</div>
+                <div class="label">মোট রেফার</div>
+            </div>
+        </div>
+        
+        <!-- Referral List -->
+        <div class="referral-list-container">
+            <div class="list-header">
+                <h3 id="listTitle">আপনার রেফার্ড ব্যবহারকারী</h3>
+                <p id="listSubtitle">আপনার দ্বারা রেফার্ড সবাই এখানে দেখানো হবে</p>
+            </div>
+            <div class="referral-list" id="referralList">
+                <!-- Referral items will be loaded here dynamically -->
+                <div class="empty-state" style="text-align: center; padding: 40px 20px; color: #7f8c8d;">
+                    <i class="fas fa-users" style="font-size: 50px; margin-bottom: 20px; opacity: 0.5;"></i>
+                    <p>কোনো রেফার্ড ইউজার পাওয়া যায়নি</p>
+                    <p style="font-size: 14px; margin-top: 10px;">আপনার রেফারেল লিংক শেয়ার করে নতুন ইউজার যোগ করুন</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ID Search -->
+        <div class="id-search-container">
+            <h3>ব্যবহারকারী ইউজারনেম দিয়ে খুঁজুন</h3>
+            <div class="search-box">
+                <input type="text" class="search-input" id="usernameSearch" placeholder="ইউজারনেম লিখুন...">
+                <button class="search-btn" onclick="searchUser()">খুঁজুন</button>
+            </div>
+            <div class="search-label">খুঁজুন এখানে ইউজারনেম লিখুন</div>
+            <div class="user-details-card" id="userDetailsCard">
+                <div class="user-details-header">
+                    <div class="user-details-avatar" id="userAvatar">?</div>
+                    <div class="user-details-text">
+                        <h4 id="searchedUserName">ব্যবহারকারী</h4>
+                        <p id="searchedUserId">ইউজারনেম: লোড হচ্ছে...</p>
+                    </div>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <div class="label">রেফার আইডি</div>
+                        <div class="value" id="detailReferralId">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">হোয়াটসঅ্যাপ নম্বর</div>
+                        <div class="value" id="detailWhatsApp">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">যোগদান তারিখ</div>
+                        <div class="value" id="detailJoinDate">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="label">রেফার করেছেন</div>
+                        <div class="value" id="detailReferrals">-</div>
+                    </div>
+                </div>
+                <button class="profile-btn" onclick="viewFullProfile()">
+                    <i class="fas fa-user-circle"></i> সম্পূর্ণ প্রোফাইল দেখুন
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item" onclick="navigateTo('dashboard.html')">
+            <i class="fas fa-home"></i>
+            <span>হোম</span>
+        </div>
+        <div class="nav-item active" onclick="navigateTo('refer.html')">
+            <i class="fas fa-share-alt"></i>
+            <span>রেফার</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('earnings.html')">
+            <i class="fas fa-wallet"></i>
+            <span>আয়</span>
+        </div>
+        <div class="nav-item" onclick="navigateTo('profile.html')">
+            <i class="fas fa-user"></i>
+            <span>প্রোফাইল</span>
+        </div>
+    </div>
+    
+    <script>
+        // Global variables
+        let allReferrals = [];
+        let currentUser = {};
+        
+        // লগইন চেক
+        function checkLogin() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn || isLoggedIn !== 'true') {
+                alert('রেফার সিস্টেম দেখতে লগইন করুন!');
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+        
+        // পেজ লোড হলে লগইন চেক করুন
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!checkLogin()) return;
+            
+            // বর্তমান ইউজারের তথ্য লোড করুন
+            loadCurrentUser();
+            
+            // localStorage থেকে রেফার ডেটা লোড করুন
+            loadReferralData();
+            
+            // শুধুমাত্র বর্তমান ইউজারের রেফার লোড করুন
+            loadCurrentUserReferrals();
+            
+            // তারিখ আপডেট
+            updateDate();
+        });
+        
+        // বর্তমান ইউজার লোড করুন
+        function loadCurrentUser() {
+            const userName = sessionStorage.getItem('name') || 'ইউজার';
+            const userPhone = sessionStorage.getItem('phone') || '০১৭১২-XXXXXX';
+            const userEmail = sessionStorage.getItem('email') || '';
+            const userId = sessionStorage.getItem('userId') || 'user_' + Date.now();
+            
+            // localStorage থেকে ইউজার ডেটা লোড করুন
+            let userData = JSON.parse(localStorage.getItem('user_' + userId)) || {
+                referrals: [],
+                totalReferrals: 0,
+                todayReferrals: 0,
+                weekReferrals: 0,
+                monthReferrals: 0
+            };
+            
+            currentUser = {
+                id: userId,
+                name: userName,
+                username: userEmail.split('@')[0] || userName.toLowerCase().replace(/\s/g, ''),
+                phone: userPhone,
+                email: userEmail,
+                referralId: generateReferralId(userName),
+                ...userData
+            };
+            
+            // রেফারেল লিংক সেট করুন
+            document.getElementById('referralLink').textContent = 
+                `https://advancebusiness.com/ref/${currentUser.referralId}`;
+            
+            // ইউজার রেফার আইডি সেট করুন
+            document.getElementById('userReferralId').textContent = currentUser.referralId;
+            
+            // রেফার সংখ্যা সেট করুন
+            updateReferralCounts();
+        }
+        
+        // ইউজারনেম থেকে রেফার আইডি জেনারেট করুন
+        function generateReferralId(username) {
+            if (!username) return 'USER' + Math.floor(1000 + Math.random() * 9000);
+            
+            // নামের প্রথম ৩ অক্ষর নিন (বাংলা বা ইংরেজি)
+            let namePart = '';
+            for (let i = 0; i < Math.min(3, username.length); i++) {
+                const char = username.charAt(i);
+                if (char.match(/[a-zA-Z]/)) {
+                    namePart += char.toUpperCase();
+                } else if (char.match(/[অ-হ]/)) {
+                    // বাংলা অক্ষরের জন্য ইংরেজি রূপান্তর (সরলীকৃত)
+                    const banglaMap = {
+                        'অ': 'A', 'আ': 'AA', 'ই': 'I', 'ঈ': 'II', 'উ': 'U', 'ঊ': 'UU',
+                        'এ': 'E', 'ঐ': 'OI', 'ও': 'O', 'ঔ': 'OU', 'ক': 'K', 'খ': 'KH',
+                        'গ': 'G', 'ঘ': 'GH', 'ঙ': 'NG', 'চ': 'C', 'ছ': 'CH', 'জ': 'J',
+                        'ঝ': 'JH', 'ঞ': 'NY', 'ট': 'T', 'ঠ': 'TH', 'ড': 'D', 'ঢ': 'DH',
+                        'ণ': 'N', 'ত': 'T', 'থ': 'TH', 'দ': 'D', 'ধ': 'DH', 'ন': 'N',
+                        'প': 'P', 'ফ': 'PH', 'ব': 'B', 'ভ': 'BH', 'ম': 'M', 'য': 'J',
+                        'র': 'R', 'ল': 'L', 'শ': 'SH', 'ষ': 'SS', 'স': 'S', 'হ': 'H'
+                    };
+                    namePart += banglaMap[char] || char;
+                } else {
+                    namePart += char.toUpperCase();
+                }
+            }
+            
+            // যদি ৩ অক্ষরের কম হয়, র‍্যান্ডম অক্ষর যোগ করুন
+            while (namePart.length < 3) {
+                namePart += String.fromCharCode(65 + Math.floor(Math.random() * 26));
+            }
+            
+            // র‍্যান্ডম সংখ্যা যোগ করুন
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            return namePart + randomNum;
+        }
+        
+        // localStorage থেকে রেফার ডেটা লোড করুন
+        function loadReferralData() {
+            allReferrals = JSON.parse(localStorage.getItem('all_referrals')) || [];
+        }
+        
+        // শুধুমাত্র বর্তমান ইউজারের রেফার লোড করুন
+        function loadCurrentUserReferrals() {
+            // শুধুমাত্র বর্তমান ইউজার দ্বারা রেফার্ড ইউজারদের দেখান
+            const userReferrals = allReferrals.filter(user => user.referredBy === currentUser.referralId);
+            
+            // ইউজারের রেফার সেভ করুন
+            currentUser.referrals = userReferrals;
+            localStorage.setItem('user_' + currentUser.id, JSON.stringify(currentUser));
+            
+            // সংখ্যা গণনা করুন
+            updateReferralCounts();
+            
+            // আজকের রেফার লোড করুন
+            showReferrals('today');
+        }
+        
+        // রেফার সংখ্যা আপডেট করুন
+        function updateReferralCounts() {
+            const now = new Date();
+            const today = now.toDateString();
+            
+            // শুধুমাত্র বর্তমান ইউজারের রেফার
+            const userReferrals = currentUser.referrals || [];
+            
+            // রেফার সংখ্যা গণনা
+            let todayCount = 0;
+            let weekCount = 0;
+            let monthCount = 0;
+            let totalCount = userReferrals.length;
+            
+            // আজকের তারিখের রেফার গণনা
+            todayCount = userReferrals.filter(user => {
+                return user.joinDate && user.joinDate.includes('আজ');
+            }).length;
+            
+            // বাস্তবায়নের জন্য, আমরা ধরে নিচ্ছি সবগুলোই নতুন
+            if (userReferrals.length > 0 && todayCount === 0) {
+                todayCount = Math.min(2, userReferrals.length); // ডেমো
+            }
+            
+            // সপ্তাহ ও মাসের জন্য
+            weekCount = Math.min(4, userReferrals.length); // ডেমো
+            monthCount = userReferrals.length;
+            
+            // UI আপডেট
+            document.getElementById('todayCount').textContent = todayCount;
+            document.getElementById('weekCount').textContent = weekCount;
+            document.getElementById('monthCount').textContent = monthCount;
+            document.getElementById('totalCount').textContent = totalCount;
+            
+            // ইউজার ID বক্সে মোট রেফার সংখ্যা
+            document.getElementById('totalReferralCount').textContent = totalCount;
+            
+            // বর্তমান ইউজারের তথ্য আপডেট
+            currentUser.totalReferrals = totalCount;
+            currentUser.todayReferrals = todayCount;
+            currentUser.weekReferrals = weekCount;
+            currentUser.monthReferrals = monthCount;
+        }
+        
+        // তারিখ আপডেট
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = now.toLocaleDateString('bn-BD', options);
+            document.getElementById('listSubtitle').textContent = dateStr;
+        }
+        
+        // রেফারেল লিংক কপি করুন
+        function copyReferralLink() {
+            const linkText = document.getElementById('referralLink').textContent;
+            if (linkText === 'লোড হচ্ছে...') {
+                alert('লিংক লোড হচ্ছে, অপেক্ষা করুন...');
+                return;
+            }
+            
+            navigator.clipboard.writeText(linkText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> কপি হয়েছে!';
+                btn.style.background = '#4CD964';
+                btn.style.color = 'white';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.style.color = '';
+                }, 2000);
+            });
+        }
+        
+        // শেয়ার ফাংশনগুলি
+        function shareViaWhatsApp() {
+            const link = document.getElementById('referralLink').textContent;
+            if (link === 'লোড হচ্ছে...') {
+                alert('লিংক লোড হচ্ছে, অপেক্ষা করুন...');
+                return;
+            }
+            
+            const text = `Advance Business এ যোগ দিন এবং উপার্জন শুরু করুন। আপনার রেফার আইডি: ${currentUser.referralId}\nলিংক: ${link}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+        
+        function shareViaFacebook() {
+            const link = document.getElementById('referralLink').textContent;
+            if (link === 'লোড হচ্ছে...') {
+                alert('লিংক লোড হচ্ছে, অপেক্ষা করুন...');
+                return;
+            }
+            
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`, '_blank');
+        }
+        
+        function shareViaTelegram() {
+            const link = document.getElementById('referralLink').textContent;
+            if (link === 'লোড হচ্ছে...') {
+                alert('লিংক লোড হচ্ছে, অপেক্ষা করুন...');
+                return;
+            }
+            
+            const text = `Advance Business এ যোগ দিন। রেফার আইডি: ${currentUser.referralId}\nলিংক: ${link}`;
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`, '_blank');
+        }
+        
+        function shareViaMessenger() {
+            const link = document.getElementById('referralLink').textContent;
+            if (link === 'লোড হচ্ছে...') {
+                alert('লিংক লোড হচ্ছে, অপেক্ষা করুন...');
+                return;
+            }
+            
+            window.open(`fb-messenger://share?link=${encodeURIComponent(link)}`, '_blank');
+        }
+        
+        // রেফারেল ট্যাব দেখান
+        function showReferrals(period) {
+            // ট্যাব সক্রিয় করুন
+            document.querySelectorAll('.stat-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.closest('.stat-tab').classList.add('active');
+            
+            // শিরোনাম আপডেট করুন
+            const titles = {
+                'today': 'আজকের রেফার্ড ব্যবহারকারী',
+                'week': 'এই সপ্তাহের রেফার্ড ব্যবহারকারী',
+                'month': 'এই মাসের রেফার্ড ব্যবহারকারী',
+                'total': 'মোট রেফার্ড ব্যবহারকারী'
+            };
+            
+            document.getElementById('listTitle').textContent = titles[period] || titles.today;
+            
+            // রেফার লিস্ট ফিল্টার করুন
+            filterAndDisplayReferrals(period);
+        }
+        
+        // রেফার লিস্ট ফিল্টার করুন এবং দেখান
+        function filterAndDisplayReferrals(period) {
+            const listContainer = document.getElementById('referralList');
+            
+            // শুধুমাত্র বর্তমান ইউজার দ্বারা রেফার্ড ইউজারদের দেখান
+            const userReferrals = currentUser.referrals || [];
+            
+            // যদি কোনো রেফার না থাকে
+            if (userReferrals.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-state" style="text-align: center; padding: 40px 20px; color: #7f8c8d;">
+                        <i class="fas fa-users" style="font-size: 50px; margin-bottom: 20px; opacity: 0.5;"></i>
+                        <p>কোনো রেফার্ড ইউজার পাওয়া যায়নি</p>
+                        <p style="font-size: 14px; margin-top: 10px;">আপনার রেফারেল লিংক শেয়ার করে নতুন ইউজার যোগ করুন</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            userReferrals.forEach(user => {
+                // প্রথম অক্ষর নিন
+                const initial = user.name ? user.name.charAt(0) : '?';
+                
+                html += `
+                <div class="referral-item">
+                    <div class="user-avatar">${initial}</div>
+                    <div class="user-info">
+                        <div class="user-name">${user.name || 'ব্যবহারকারী'}</div>
+                        <div class="user-details">
+                            <div class="user-detail-row">
+                                <i class="fas fa-user"></i>
+                                <span>ইউজারনেম: ${user.username || user.referralId}</span>
+                            </div>
+                            <div class="user-detail-row">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>${user.phone || 'নম্বর নেই'}</span>
+                            </div>
+                            <div class="user-detail-row">
+                                <i class="fas fa-envelope"></i>
+                                <span>${user.email || 'ইমেইল নেই'}</span>
+                            </div>
+                        </div>
+                        <div class="referral-count">রেফার করেছেন: ${user.referralCount || 0} জন</div>
+                        <div class="join-date">${user.joinDate || 'তারিখ নেই'}</div>
+                    </div>
+                </div>
+                `;
+            });
+            
+            listContainer.innerHTML = html;
+        }
+        
+        // ব্যবহারকারী খুঁজুন (ইউজারনেম দিয়ে)
+        function searchUser() {
+            const searchInput = document.getElementById('usernameSearch').value.trim();
+            if (!searchInput) {
+                alert('ইউজারনেম লিখুন!');
+                return;
+            }
+            
+            // সব রেফার থেকে খুঁজুন
+            const foundUser = allReferrals.find(user => 
+                user.username && user.username.toLowerCase() === searchInput.toLowerCase() ||
+                user.referralId && user.referralId.toLowerCase() === searchInput.toLowerCase() ||
+                user.name && user.name.toLowerCase().includes(searchInput.toLowerCase())
+            );
+            
+            const card = document.getElementById('userDetailsCard');
+            
+            if (foundUser) {
+                const initial = foundUser.name ? foundUser.name.charAt(0) : '?';
+                document.getElementById('userAvatar').textContent = initial;
+                document.getElementById('searchedUserName').textContent = foundUser.name || 'ব্যবহারকারী';
+                document.getElementById('searchedUserId').textContent = `ইউজারনেম: ${foundUser.username || foundUser.referralId}`;
+                document.getElementById('detailReferralId').textContent = foundUser.referralId || '-';
+                document.getElementById('detailWhatsApp').textContent = foundUser.phone || '-';
+                document.getElementById('detailJoinDate').textContent = foundUser.joinDate || '-';
+                document.getElementById('detailReferrals').textContent = `${foundUser.referralCount || 0} জন`;
+                
+                // প্রোফাইল দেখার বাটনের জন্য ইউজার আইডি সেভ করুন
+                card.dataset.userId = foundUser.id || foundUser.referralId;
+                
+                card.classList.add('active');
+            } else {
+                alert('ইউজার পাওয়া যায়নি!');
+                card.classList.remove('active');
+            }
+        }
+        
+        // সম্পূর্ণ প্রোফাইল দেখুন
+        function viewFullProfile() {
+            const card = document.getElementById('userDetailsCard');
+            const userId = card.dataset.userId;
+            
+            if (userId) {
+                alert('প্রোফাইল পেজ শীঘ্রই আসছে! ইউজার আইডি: ' + userId);
+                // window.location.href = 'profile.html?user=' + userId;
+            } else {
+                alert('প্রথমে একজন ইউজার খুঁজুন।');
+            }
+        }
+        
+        // নতুন রেফার যোগ করার ফাংশন (বাস্তবে রেজিস্ট্রেশন ফর্ম থেকে কল হবে)
+        function addNewReferral(newUserData) {
+            // নতুন ইউজারের জন্য রেফার আইডি জেনারেট করুন
+            newUserData.referralId = generateReferralId(newUserData.name);
+            newUserData.id = 'user_' + Date.now() + Math.floor(Math.random() * 1000);
+            newUserData.joinDate = 'আজ ' + new Date().toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' });
+            newUserData.referralCount = 0;
+            
+            // বর্তমান ইউজার দ্বারা রেফার্ড হয়েছে
+            newUserData.referredBy = currentUser.referralId;
+            
+            // সব রেফারের লিস্টে যোগ করুন
+            allReferrals.push(newUserData);
+            localStorage.setItem('all_referrals', JSON.stringify(allReferrals));
+            
+            // বর্তমান ইউজারের রেফার লিস্টে যোগ করুন
+            currentUser.referrals.push(newUserData);
+            localStorage.setItem('user_' + currentUser.id, JSON.stringify(currentUser));
+            
+            // সংখ্যা আপডেট করুন
+            updateReferralCounts();
+            
+            // লিস্ট রিফ্রেশ করুন
+            showReferrals('today');
+            
+            alert('নতুন রেফার সফলভাবে যোগ করা হয়েছে!');
+        }
+        
+        // নেভিগেশন ফাংশন
+        function goBack() {
+            window.history.back();
+        }
+        
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+        
+        // Enter কী দিয়ে সার্চ করার অনুমতি দিন
+        document.getElementById('usernameSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchUser();
+            }
+        });
+        
+        // ডেমো রেফার যোগ করার ফাংশন (টেস্টিং এর জন্য)
+        function addDemoReferral() {
+            const demoUsers = [
+                {
+                    name: 'রহিম মিয়া',
+                    username: 'rahimmia',
+                    phone: '০১৭১২-৩৪৫৬৭৮',
+                    email: 'rahim@email.com'
+                },
+                {
+                    name: 'করিম উদ্দিন',
+                    username: 'karimuddin',
+                    phone: '০১৯১২-৯৮৭৬৫৪',
+                    email: 'karim@email.com'
+                }
+            ];
+            
+            const randomUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
+            addNewReferral(randomUser);
+        }
+    </script>
+</body>
+</html>

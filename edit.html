@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রোফাইল এডিট - Advance Business App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .edit-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .edit-header {
+            background: linear-gradient(to right, #ff8c00, #ffa500);
+            padding: 25px;
+            color: white;
+            text-align: center;
+        }
+        
+        .edit-header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .edit-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .edit-form {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        
+        .input-with-icon input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .input-with-icon input:focus {
+            border-color: #ff8c00;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
+        }
+        
+        .profile-photo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #ff8c00;
+            object-fit: cover;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .profile-photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .photo-upload-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #f0f0f0;
+            color: #333;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .photo-upload-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .btn-save {
+            background: linear-gradient(to right, #ff8c00, #ffa500);
+            color: white;
+        }
+        
+        .btn-save:hover {
+            background: linear-gradient(to right, #e67e00, #e69500);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.3);
+        }
+        
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .btn-cancel:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        
+        .error-message {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: 5px;
+            min-height: 20px;
+        }
+        
+        .success-message {
+            color: #4CAF50;
+            font-size: 14px;
+            margin-top: 5px;
+            min-height: 20px;
+        }
+        
+        .password-change {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .password-change h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        @media (max-width: 600px) {
+            .edit-container {
+                max-width: 100%;
+            }
+            
+            .edit-form {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // লগইন চেক - শুরুতে
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+        if (!isLoggedIn || isLoggedIn !== 'true') {
+            alert('দুঃখিত! আপনাকে প্রথমে লগইন করতে হবে।');
+            window.location.href = 'login.html';
+        }
+    </script>
+    
+    <div class="edit-container">
+        <div class="edit-header">
+            <h1>প্রোফাইল এডিট করুন</h1>
+            <p>আপনার তথ্য আপডেট করুন</p>
+        </div>
+        
+        <div class="edit-form">
+            <div class="profile-photo-section">
+                <img id="profileImage" class="profile-photo" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Photo">
+                <div class="photo-upload-btn" id="uploadBtn">
+                    <i class="fas fa-camera"></i> ফটো পরিবর্তন করুন
+                </div>
+                <input type="file" id="photoInput" accept="image/*" style="display: none;">
+            </div>
+            
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="name">পুরো নাম</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="name" placeholder="আপনার পুরো নাম" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">মোবাইল নম্বর</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="phone" placeholder="মোবাইল নম্বর" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">ইমেইল</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="ইমেইল ঠিকানা" required>
+                    </div>
+                </div>
+                
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+                
+                <div class="password-change">
+                    <h3>পাসওয়ার্ড পরিবর্তন করুন (ঐচ্ছিক)</h3>
+                    <div class="form-group">
+                        <label for="currentPassword">বর্তমান পাসওয়ার্ড</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="currentPassword" placeholder="বর্তমান পাসওয়ার্ড">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newPassword">নতুন পাসওয়ার্ড</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="newPassword" placeholder="নতুন পাসওয়ার্ড">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">পাসওয়ার্ড নিশ্চিত করুন</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmPassword" placeholder="পাসওয়ার্ড নিশ্চিত করুন">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-save">সংরক্ষণ করুন</button>
+                    <a href="profile.html" class="btn btn-cancel">বাতিল করুন</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // পেজ লোড হওয়ার সময় ব্যবহারকারীর তথ্য পপুলেট করুন
+        document.addEventListener('DOMContentLoaded', function() {
+            // সেশন স্টোরেজ থেকে তথ্য লোড করুন
+            const name = sessionStorage.getItem('name') || '';
+            const phone = sessionStorage.getItem('phone') || '';
+            const email = sessionStorage.getItem('email') || '';
+            const username = sessionStorage.getItem('username') || '';
+            
+            // লোকাল স্টোরেজ থেকে ফটো লোড করুন
+            const photo = localStorage.getItem('profilePhoto') || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+            
+            // ফর্ম পপুলেট করুন
+            document.getElementById('name').value = name;
+            document.getElementById('phone').value = phone;
+            document.getElementById('email').value = email;
+            document.getElementById('profileImage').src = photo;
+            
+            // ফটো আপলোড বাটন ইভেন্ট
+            document.getElementById('uploadBtn').addEventListener('click', function() {
+                document.getElementById('photoInput').click();
+            });
+            
+            // ফটো ইনপুট পরিবর্তন ইভেন্ট
+            document.getElementById('photoInput').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // ফাইল সাইজ চেক (max 2MB)
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('ফটোর সাইজ 2MB এর কম হতে হবে!');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profileImage').src = e.target.result;
+                        localStorage.setItem('profilePhoto', e.target.result);
+                        
+                        // সফলতা মেসেজ
+                        const successMessage = document.getElementById('successMessage');
+                        successMessage.textContent = 'ফটো আপলোড সফল হয়েছে!';
+                        setTimeout(() => {
+                            successMessage.textContent = '';
+                        }, 3000);
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+        
+        // ফর্ম সাবমিশন হ্যান্ডলিং
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            
+            // ভ্যালিডেশন
+            if (!name || !phone || !email) {
+                errorMessage.textContent = 'সব প্রয়োজনীয় তথ্য পূরণ করুন!';
+                successMessage.textContent = '';
+                return;
+            }
+            
+            // ইমেইল ভ্যালিডেশন
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorMessage.textContent = 'সঠিক ইমেইল দিন!';
+                successMessage.textContent = '';
+                return;
+            }
+            
+            // ফোন নম্বর ভ্যালিডেশন (সিম্পল)
+            const phoneRegex = /^[0-9+\s\-()]{10,}$/;
+            if (!phoneRegex.test(phone)) {
+                errorMessage.textContent = 'সঠিক ফোন নম্বর দিন!';
+                successMessage.textContent = '';
+                return;
+            }
+            
+            // পাসওয়ার্ড পরিবর্তনের লজিক (ঐচ্ছিক)
+            if (currentPassword || newPassword || confirmPassword) {
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    errorMessage.textContent = 'পাসওয়ার্ড পরিবর্তন করতে হলে সব ফিল্ড পূরণ করুন!';
+                    successMessage.textContent = '';
+                    return;
+                }
+                
+                if (newPassword.length < 4) {
+                    errorMessage.textContent = 'নতুন পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে!';
+                    successMessage.textContent = '';
+                    return;
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    errorMessage.textContent = 'নতুন পাসওয়ার্ড মিলছে না!';
+                    successMessage.textContent = '';
+                    return;
+                }
+                
+                // বর্তমান পাসওয়ার্ড চেক
+                const username = sessionStorage.getItem('username');
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userIndex = users.findIndex(u => u.username === username);
+                
+                if (userIndex !== -1) {
+                    if (users[userIndex].password !== currentPassword) {
+                        errorMessage.textContent = 'বর্তমান পাসওয়ার্ড সঠিক নয়!';
+                        successMessage.textContent = '';
+                        return;
+                    }
+                    
+                    // পাসওয়ার্ড আপডেট
+                    users[userIndex].password = newPassword;
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+            }
+            
+            // সেশন স্টোরেজে তথ্য আপডেট করুন
+            sessionStorage.setItem('name', name);
+            sessionStorage.setItem('phone', phone);
+            sessionStorage.setItem('email', email);
+            
+            // লোকাল স্টোরেজেও সংরক্ষণ করুন (যদি ব্রাউজার রিফ্রেশ হয়)
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userPhone', phone);
+            localStorage.setItem('userEmail', email);
+            
+            // ইউজার ডেটাবেসেও আপডেট করুন
+            const username = sessionStorage.getItem('username');
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userIndex = users.findIndex(u => u.username === username);
+            
+            if (userIndex !== -1) {
+                users[userIndex].name = name;
+                users[userIndex].phone = phone;
+                users[userIndex].email = email;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            // সফলতা মেসেজ
+            errorMessage.textContent = '';
+            successMessage.textContent = 'প্রোফাইল সফলভাবে আপডেট হয়েছে! প্রোফাইল পেজে ফিরে যাচ্ছে...';
+            
+            // ২ সেকেন্ড পর প্রোফাইল পেজে রিডাইরেক্ট
+            setTimeout(() => {
+                window.location.href = 'profile.html';
+            }, 2000);
+        });
+        
+        // ক্যান্সেল বাটন ইভেন্ট
+        document.querySelector('.btn-cancel').addEventListener('click', function(e) {
+            if (!confirm('আপনি কি নিশ্চিত? সব পরিবর্তন বাতিল হবে।')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

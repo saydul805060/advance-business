@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>যোগাযোগ ফরম - সরাসরি মেইল</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .submit-btn:hover {
+            background: #218838;
+        }
+        
+        .whatsapp-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 8px;
+            border-left: 4px solid #25D366;
+        }
+        
+        .whatsapp-info i {
+            color: #25D366;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-envelope"></i> যোগাযোগ ফরম</h1>
+            <p>ফরম পূরণ করুন এবং সরাসরি মেইল পাঠান</p>
+        </div>
+        
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">আপনার নাম <span class="required">*</span></label>
+                <input type="text" id="name" placeholder="আপনার পুরো নাম" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="whatsapp">হোয়াটসঅ্যাপ নম্বর <span class="required">*</span></label>
+                <input type="tel" id="whatsapp" placeholder="01XXXXXXXXX" required>
+                <div class="whatsapp-info">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>এই নম্বরে আমরা যোগাযোগ করতে পারব</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">আপনার ইমেইল <span class="required">*</span></label>
+                <input type="email" id="email" placeholder="your@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">বিষয় <span class="required">*</span></label>
+                <select id="subject" required>
+                    <option value="">বিষয় নির্বাচন করুন</option>
+                    <option value="সাধারণ প্রশ্ন">সাধারণ প্রশ্ন</option>
+                    <option value="সেবা সম্পর্কিত">সেবা সম্পর্কিত</option>
+                    <option value="অনুরোধ">অনুরোধ</option>
+                    <option value="অভিযোগ">অভিযোগ</option>
+                    <option value="প্রস্তাব">প্রস্তাব</option>
+                    <option value="অন্যান্য">অন্যান্য</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">আপনার বার্তা <span class="required">*</span></label>
+                <textarea id="message" placeholder="আপনার বিস্তারিত বার্তা লিখুন..." required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> মেইল পাঠান
+            </button>
+        </form>
+        
+        <div class="footer">
+            <p>ফরম জমা দিলে সরাসরি মেইল এপ্লিকেশন ওপেন হবে</p>
+            <p>Send বাটনে ক্লিক করে মেইল পাঠান</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // ফর্ম ডেটা সংগ্রহ
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                whatsapp: document.getElementById('whatsapp').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value.trim(),
+                timestamp: new Date().toLocaleString('bn-BD')
+            };
+            
+            // ভ্যালিডেশন
+            if (!formData.name || !formData.whatsapp || !formData.email || !formData.subject || !formData.message) {
+                alert('দয়া করে সব ফিল্ড পূরণ করুন');
+                return;
+            }
+            
+            // ইমেইল ঠিকানা
+            const toEmail = "anowerislam805060@gmail.com";
+            
+            // ইমেইল সাবজেক্ট
+            const emailSubject = `যোগাযোগ ফরম: ${formData.subject}`;
+            
+            // ইমেইল বডি তৈরি
+            const emailBody = `
+যোগাযোগ ফরম থেকে নতুন বার্তা:
+
+নাম: ${formData.name}
+হোয়াটসঅ্যাপ: ${formatPhone(formData.whatsapp)}
+ইমেইল: ${formData.email}
+বিষয়: ${formData.subject}
+বার্তা: ${formData.message}
+
+তারিখ ও সময়: ${formData.timestamp}
+
+---
+এই মেইলটি যোগাযোগ ফরম থেকে স্বয়ংক্রিয়ভাবে তৈরি হয়েছে।
+            `;
+            
+            // মেইলটো লিঙ্ক তৈরি
+            const mailtoLink = `mailto:${toEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+            
+            // মেইল এপ্লিকেশন ওপেন
+            window.location.href = mailtoLink;
+        });
+        
+        function formatPhone(phone) {
+            let clean = phone.replace(/\s+/g, '');
+            if (clean.startsWith('01')) {
+                return '+88' + clean;
+            }
+            if (!clean.startsWith('+')) {
+                return '+' + clean;
+            }
+            return clean;
+        }
+        
+        // হোয়াটসঅ্যাপ ফরম্যাটিং
+        document.getElementById('whatsapp').addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (!value.startsWith('01') && value.length === 10) {
+                    value = '01' + value;
+                }
+                this.value = value;
+            }
+        });
+    </script>
+</body>
+</html>

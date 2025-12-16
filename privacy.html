@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advance Business | Privacy Policy</title>
+  <style>
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      background:#f5f7fa;
+      margin:0;
+      padding:0;
+      line-height:1.7;
+      color:#333;
+    }
+    .container{
+      max-width:1000px;
+      margin:40px auto;
+      background:#ffffff;
+      padding:30px;
+      border-radius:10px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    }
+    h1{
+      text-align:center;
+      color:#1e40af;
+      margin-bottom:5px;
+    }
+    h2{
+      color:#0f172a;
+      margin-top:30px;
+    }
+    p{
+      margin:10px 0;
+    }
+    .lang-switch{
+      text-align:center;
+      margin:20px 0 30px 0;
+    }
+    .lang-switch button{
+      padding:10px 20px;
+      font-size:16px;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      background:#1e40af;
+      color:#fff;
+    }
+    .lang-switch button:hover{
+      background:#1d4ed8;
+    }
+    footer{
+      text-align:center;
+      margin-top:40px;
+      font-size:14px;
+      color:#6b7280;
+    }
+    .lang{display:none;}
+    .lang.active{display:block;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Advance Business</h1>
+    <p style="text-align:center;">Privacy Policy / গোপনীয়তা নীতি</p>
+
+    <div class="lang-switch">
+      <button onclick="toggleLang()" id="langBtn">English</button>
+    </div>
+
+    <!-- Bangla -->
+    <div id="bn" class="lang active">
+      <h2>গোপনীয়তা নীতি (বাংলা)</h2>
+      <p>
+        Advance Business আপনার ব্যক্তিগত তথ্যের গোপনীয়তা রক্ষা করতে প্রতিশ্রুতিবদ্ধ।
+        এই ওয়েবসাইট ব্যবহার করার মাধ্যমে আপনি এই গোপনীয়তা নীতির শর্তাবলীতে সম্মতি প্রদান করছেন।
+      </p>
+      <p>
+        আমরা আপনার নাম, ইমেইল ঠিকানা, ফোন নম্বর অথবা অন্যান্য প্রয়োজনীয় তথ্য সংগ্রহ করতে পারি
+        শুধুমাত্র আমাদের সেবা উন্নত করা এবং আপনার সাথে যোগাযোগ করার উদ্দেশ্যে।
+      </p>
+      <p>
+        আপনার প্রদত্ত কোনো তথ্য তৃতীয় পক্ষের সাথে বিক্রি, শেয়ার বা হস্তান্তর করা হবে না,
+        যদি না আইনগতভাবে প্রয়োজন হয়।
+      </p>
+      <p>
+        আমরা আপনার তথ্য সুরক্ষিত রাখতে যথাযথ প্রযুক্তিগত ও প্রশাসনিক নিরাপত্তা ব্যবস্থা গ্রহণ করি।
+        তবে ইন্টারনেট ব্যবহারের কারণে সম্পূর্ণ নিরাপত্তা নিশ্চিত করা সম্ভব নয়।
+      </p>
+      <p>
+        Advance Business যেকোনো সময় এই গোপনীয়তা নীতি পরিবর্তন বা হালনাগাদ করার অধিকার সংরক্ষণ করে।
+        পরিবর্তনসমূহ এই পেজে প্রকাশ করা হবে।
+      </p>
+    </div>
+
+    <!-- English -->
+    <div id="en" class="lang">
+      <h2>Privacy Policy (English)</h2>
+      <p>
+        Advance Business is committed to protecting your personal privacy.
+        By using this website, you agree to the terms of this Privacy Policy.
+      </p>
+      <p>
+        We may collect personal information such as your name, email address,
+        phone number, or other necessary details solely to improve our services
+        and to communicate with you.
+      </p>
+      <p>
+        Your personal information will not be sold, shared, or transferred to
+        any third party unless required by law.
+      </p>
+      <p>
+        We implement appropriate technical and administrative security measures
+        to protect your information. However, complete security over the internet
+        cannot be guaranteed.
+      </p>
+      <p>
+        Advance Business reserves the right to update or modify this Privacy Policy
+        at any time. Any changes will be posted on this page.
+      </p>
+    </div>
+
+    <footer>
+      © 2025 Advance Business. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    function toggleLang(){
+      const bn = document.getElementById('bn');
+      const en = document.getElementById('en');
+      const btn = document.getElementById('langBtn');
+
+      if(bn.classList.contains('active')){
+        bn.classList.remove('active');
+        en.classList.add('active');
+        btn.innerText = 'বাংলা';
+      } else {
+        en.classList.remove('active');
+        bn.classList.add('active');
+        btn.innerText = 'English';
+      }
+    }
+  </script>
+</body>
+</html>

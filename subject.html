@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance Business - বর্ণনা</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 40px;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 25px;
+            position: relative;
+        }
+
+        .title {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .title-en {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .title-bn {
+            font-family: 'Noto Sans Bengali', sans-serif;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .lang-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-btn i {
+            font-size: 1.2rem;
+        }
+
+        .lang-btn-bn {
+            background-color: #1a5276;
+            color: white;
+        }
+
+        .lang-btn-en {
+            background-color: #2e86c1;
+            color: white;
+        }
+
+        .lang-btn.active {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Content Styles */
+        .content {
+            padding: 20px 0;
+        }
+
+        .language-section {
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .language-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #1a5276;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8f4fc;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .highlight-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2e86c1;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .highlight-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eaeaea;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.2rem;
+            color: #2e86c1;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            color: #1a5276;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-desc {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 25px;
+            background-color: #e8f4fc;
+            border-radius: 10px;
+            margin: 30px 0;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            text-align: center;
+            border-left: 4px solid #1a5276;
+        }
+
+        .conclusion {
+            background-color: #f1f8ff;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border: 1px solid #d1e3ff;
+        }
+
+        .conclusion-title {
+            font-size: 1.5rem;
+            color: #1a5276;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            
+            .title {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .lang-btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .language-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .lang-btn {
+                width: 80%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1 class="title title-bn">Advance Business</h1>
+            <p class="subtitle">একটি অগ্রণী ব্যবসায়িক পরামর্শদাতা প্রতিষ্ঠান</p>
+            
+            <!-- Language Selector -->
+            <div class="language-selector">
+                <button class="lang-btn lang-btn-bn active" id="showBangla">
+                    <i class="fas fa-language"></i>
+                    বাংলা ভার্সন
+                </button>
+                <button class="lang-btn lang-btn-en" id="showEnglish">
+                    <i class="fas fa-language"></i>
+                    English Version
+                </button>
+            </div>
+        </div>
+        
+        <!-- Bengali Content -->
+        <div class="content">
+            <div class="language-section active" id="banglaContent">
+                <h2 class="section-title">Advance Business সম্পর্কে</h2>
+                
+                <div class="description">
+                    <p><strong>Advance Business</strong> হল একটি অগ্রণী ব্যবসায়িক পরামর্শদাতা প্রতিষ্ঠান যা ২০২৫ সালে প্রতিষ্ঠিত হয়। প্রতিষ্ঠানটি আধুনিক ব্যবসায়িক চ্যালেঞ্জ মোকাবেলায় উদ্ভাবনী সমাধান প্রদানের মাধ্যমে ব্যক্তি ও প্রতিষ্ঠানকে তাদের লক্ষ্য অর্জনে সহায়তা করে।</p>
+                    
+                    <p>আমরা বিশ্বাস করি যে প্রতিটি ব্যবসারই সফল হওয়ার সম্ভাবনা রয়েছে, শুধু প্রয়োজন সঠিক দিকনির্দেশনা, সময়োপযোগী কৌশল এবং কার্যকর বাস্তবায়ন। আমাদের দল বিভিন্ন শিল্পের অভিজ্ঞ বিশেষজ্ঞদের নিয়ে গঠিত যারা তাদের জ্ঞান ও অভিজ্ঞতা কাজে লাগিয়ে ক্লায়েন্টদের ব্যবসায়িক লক্ষ্য অর্জনে সহায়তা করে।</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3 class="highlight-title">আমাদের বিশেষত্ব</h3>
+                    <p>Advance Business-এর মূল শক্তি হল আমাদের বহুমুখী সেবা যা ব্যবসায়ের প্রতিটি দিক কভার করে। আমরা শুধুমাত্র তাত্ত্বিক পরামর্শই প্রদান করি না, বরং প্রতিটি প্রোজেক্টের বাস্তবায়ন পর্যায়ে সরাসরি সহযোগিতা করি।</p>
+                </div>
+                
+                <h2 class="section-title">আমাদের সেবাসমূহ</h2>
+                
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">ব্যবসায়িক কৌশল ও পরিকল্পনা</h3>
+                        <p class="feature-desc">দীর্ঘমেয়াদী ব্যবসায়িক সাফল্যের জন্য কৌশলগত পরিকল্পনা ও বাস্তবায়ন কৌশল প্রদান।</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-digital-tachograph"></i>
+                        </div>
+                        <h3 class="feature-title">ডিজিটাল রূপান্তর</h3>
+                        <p class="feature-desc">আধুনিক প্রযুক্তি ব্যবহার করে ব্যবসায়িক প্রক্রিয়ার ডিজিটাল রূপান্তরে সহায়তা।</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="feature-title">বিপণন ও ব্র্যান্ডিং</h3>
+                        <p class="feature-desc">কার্যকর বিপণন কৌশল ও শক্তিশালী ব্র্যান্ড আইডেন্টিটি তৈরিতে সহায়তা।</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "সফল ব্যবসা শুধু ভালো পণ্য বা সেবা নয়, বরং সঠিক কৌশল, সময়োপযোগী সিদ্ধান্ত এবং ধারাবাহিক উন্নয়নের সমন্বয়।"
+                </div>
+                
+                <div class="description">
+                    <p>Advance Business-এর সাফল্যের মূল চাবিকাঠি হল আমাদের কাস্টমাইজড অ্যাপ্রোচ। আমরা প্রতিটি ক্লায়েন্টের ব্যবসাকে আলাদাভাবে বিশ্লেষণ করি এবং তাদের নির্দিষ্ট চাহিদা ও চ্যালেঞ্জ বিবেচনা করে সমাধান প্রস্তাব করি। এই ব্যক্তিগতকৃত সেবাই আমাদেরকে প্রতিযোগিতার বাজারে আলাদা করে তোলে।</p>
+                    
+                    <p>আমরা আমাদের ক্লায়েন্টদের সাথে দীর্ঘমেয়াদী সম্পর্ক তৈরি করতে বিশ্বাসী। শুধুমাত্র এককালীন পরামর্শ নয়, বরং তাদের ব্যবসায়িক যাত্রার প্রতিটি পর্যায়ে আমরা সহযোগী হিসেবে পাশে থাকি।</p>
+                </div>
+                
+                <div class="conclusion">
+                    <h3 class="conclusion-title">ভবিষ্যৎ দৃষ্টিভঙ্গি</h3>
+                    <p>Advance Business ভবিষ্যতে এশিয়া অঞ্চলের শীর্ষ ব্যবসায়িক পরামর্শদাতা প্রতিষ্ঠান হিসেবে প্রতিষ্ঠিত হওয়ার লক্ষ্যে কাজ করে যাচ্ছে। আমরা ক্রমাগত গবেষণা ও উন্নয়নের মাধ্যমে আমাদের সেবার মান উন্নত করতে এবং নতুন ব্যবসায়িক চ্যালেঞ্জের মুখোমুখি হওয়ার জন্য প্রস্তুত থাকছি।</p>
+                </div>
+            </div>
+            
+            <!-- English Content -->
+            <div class="language-section" id="englishContent">
+                <h2 class="section-title">About Advance Business</h2>
+                
+                <div class="description">
+                    <p><strong>Advance Business</strong> is a leading business consulting firm established in 2025. The organization assists individuals and companies in achieving their goals by providing innovative solutions to modern business challenges.</p>
+                    
+                    <p>We believe that every business has the potential to succeed; it only requires proper guidance, timely strategies, and effective implementation. Our team consists of experienced experts from various industries who leverage their knowledge and experience to help clients achieve their business objectives.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <h3 class="highlight-title">Our Specialization</h3>
+                    <p>The core strength of Advance Business lies in our multifaceted services that cover every aspect of business. We don't just provide theoretical advice; we offer direct assistance during the implementation phase of each project.</p>
+                </div>
+                
+                <h2 class="section-title">Our Services</h2>
+                
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Business Strategy & Planning</h3>
+                        <p class="feature-desc">Providing strategic planning and implementation strategies for long-term business success.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-digital-tachograph"></i>
+                        </div>
+                        <h3 class="feature-title">Digital Transformation</h3>
+                        <p class="feature-desc">Assisting in the digital transformation of business processes using modern technology.</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="feature-title">Marketing & Branding</h3>
+                        <p class="feature-desc">Helping to develop effective marketing strategies and strong brand identity.</p>
+                    </div>
+                </div>
+                
+                <div class="quote">
+                    "Successful business is not just about good products or services, but the combination of right strategy, timely decisions, and continuous improvement."
+                </div>
+                
+                <div class="description">
+                    <p>The key to Advance Business's success is our customized approach. We analyze each client's business separately and propose solutions considering their specific needs and challenges. This personalized service sets us apart in the competitive market.</p>
+                    
+                    <p>We believe in building long-term relationships with our clients. We are not just one-time consultants; we stand by them as partners at every stage of their business journey.</p>
+                </div>
+                
+                <div class="conclusion">
+                    <h3 class="conclusion-title">Future Vision</h3>
+                    <p>Advance Business is working towards becoming a top business consulting firm in the Asian region in the future. We continue to improve the quality of our services through continuous research and development, preparing to face new business challenges.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 Advance Business. All rights reserved.</p>
+             </div>
+
+    <script>
+        // Language switching functionality
+        document.getElementById('showBangla').addEventListener('click', function() {
+            // Show Bangla content
+            document.getElementById('banglaContent').classList.add('active');
+            document.getElementById('englishContent').classList.remove('active');
+            
+            // Update active button
+            document.getElementById('showBangla').classList.add('active');
+            document.getElementById('showEnglish').classList.remove('active');
+            
+            // Change title
+            document.querySelector('.title-bn').style.display = 'block';
+            document.querySelector('.title-en').style.display = 'none';
+            document.querySelector('.subtitle').textContent = 'একটি অগ্রণী ব্যবসায়িক পরামর্শদাতা প্রতিষ্ঠান';
+        });
+        
+        document.getElementById('showEnglish').addEventListener('click', function() {
+            // Show English content
+            document.getElementById('englishContent').classList.add('active');
+            document.getElementById('banglaContent').classList.remove('active');
+            
+            // Update active button
+            document.getElementById('showEnglish').classList.add('active');
+            document.getElementById('showBangla').classList.remove('active');
+            
+            // Change title
+            document.querySelector('.title-bn').style.display = 'none';
+            document.querySelector('.subtitle').textContent = 'A Leading Business Consulting Firm';
+        });
+        
+        // Initialize with Bangla content
+        window.addEventListener('DOMContentLoaded', function() {
+            // Add English title for switching
+            const titleElement = document.querySelector('.title');
+            const englishTitle = document.createElement('span');
+            englishTitle.className = 'title title-en';
+            englishTitle.textContent = 'Advance Business';
+            englishTitle.style.display = 'none';
+            titleElement.parentNode.insertBefore(englishTitle, titleElement.nextSibling);
+        });
+    </script>
+</body>
+</html>
